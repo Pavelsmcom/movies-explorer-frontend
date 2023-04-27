@@ -1,0 +1,38 @@
+.checkbox {
+  position: relative;
+  width: 34px;
+  height: 14px;
+  background: #ebebeb;
+  border-radius: 7px;
+  cursor: pointer;
+  margin-top: 3px;
+}
+.checkbox-input {
+  position: absolute;
+  display: none;
+}
+.checkbox-slider {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transition: 0.4s;
+}
+.checkbox-input:checked ~ .checkbox-slider {
+  background: #2be080;
+  border-radius: 16px;
+}
+.checkbox-slider::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #f5f5f5;
+  transition: 0.4s;
+}
+.checkbox-input:checked ~ .checkbox-slider::before {
+  transform: translateX(20px);
+  background: #fff;
+}

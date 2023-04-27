@@ -1,0 +1,55 @@
+.promo {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.promo__container{
+  padding: 20px 40px 30px 40px;
+  background-color: #272727;
+  border-radius: 10px;
+}
+
+.promo__header {
+  color: #fff;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 58px;
+  text-align: center;
+  letter-spacing: -0.04em;
+  margin: 0 auto;
+  padding: 140px 0 151px 0;
+  max-width: 730px;
+}
+
+@media screen and (max-width: 768px) {
+  .promo {
+    padding: 0 20px;
+  }
+
+  .promo__header {
+    font-size: 40px;
+    line-height: 52px;
+  }
+
+  .promo__header {
+    padding: 330px 0 314px 0;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .promo {
+    padding: 0 14px;
+  }
+
+  .promo__header {
+    padding: 200px 0 212px 0;
+    font-size: 29px;
+    line-height: 37px;
+  }
+
+  .promo__container{
+    padding: 20px 0 18px 0;
+  }
+}

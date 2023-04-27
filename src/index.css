@@ -1,0 +1,40 @@
+/* normalize */
+@import url(./vendor/normalize.css);
+/* fonts */
+
+/* logo */
+
+/* App */
+@import url(../src/components/App/App.css);
+/* Header */
+@import url(../src/components/Header/Header.css);
+/* Promo */
+@import url(../src/components/Promo/Promo.css);
+/* NavTab */
+@import url(../src/components/NavTab/NavTab.css);
+/* SubHeader */
+@import url(../src/components/SubHeader/SubHeader.css);
+/* AboutProject */
+@import url(../src/components/AboutProject/AboutProject.css);
+/* Tech */
+@import url(../src/components/Techs/Techs.css);
+/* AboutMe */
+@import url(../src/components/AboutMe/AboutMe.css);
+/* Portfolio */
+@import url(../src/components/Portfolio/Portfolio.css);
+/* PortfolioLink */
+@import url(../src/components/PortfolioLink/PortfolioLink.css);
+/* Footer */
+@import url(../src/components/Footer/Footer.css);
+/* Search-form */
+@import url(../src/components/SearchForm/SearchForm.css);
+/* Filter-checkbox */
+@import url(../src/components/FilterCheckbox/FilterCheckbox.css);
+/* Checkbox */
+@import url(../src/components/Checkbox/Checkbox.css);
+/* MoviesCard */
+@import url(../src/components/MoviesCard/MoviesCard.css);
+/* MoviesCardList */
+@import url(../src/components/MoviesCardList/MoviesCardList.css);
+/* Burger */
+@import url(../src/components/Burger/Burger.css);
