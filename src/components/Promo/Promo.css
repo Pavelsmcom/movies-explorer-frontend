@@ -4,7 +4,7 @@
   padding: 0 40px;
 }
 
-.promo__container{
+.promo__container {
   padding: 20px 40px 30px 40px;
   background-color: #272727;
   border-radius: 10px;
@@ -19,11 +19,11 @@
   text-align: center;
   letter-spacing: -0.04em;
   margin: 0 auto;
-  padding: 140px 0 151px 0;
+  padding: 137px 0 151px 0;
   max-width: 730px;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1279px) {
   .promo {
     padding: 0 20px;
   }
@@ -38,18 +38,18 @@
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 767px) {
   .promo {
     padding: 0 14px;
   }
 
   .promo__header {
-    padding: 200px 0 212px 0;
+    padding: 202px 0 210px 0;
     font-size: 29px;
     line-height: 37px;
   }
 
-  .promo__container{
+  .promo__container {
     padding: 20px 0 18px 0;
   }
 }

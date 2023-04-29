@@ -1,7 +1,7 @@
 .techs {
   margin: 0 auto;
   background: #272727;
-  padding: 100px 70px;
+  padding: 101px 70px;
 }
 
 .techs__header {
@@ -16,7 +16,7 @@
   margin: 0;
 }
 
-.techs__sub-header{
+.techs__sub-header {
   max-width: 1140px;
   margin: 0 auto;
 }
@@ -58,9 +58,9 @@
   padding-top: 26px;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1279px) {
   .techs {
-    padding: 90px 50px;
+    padding: 92px 50px;
   }
 
   .techs__header {
@@ -83,10 +83,9 @@
     letter-spacing: -0.04em;
     width: 84px;
   }
-
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 767px) {
   .techs {
     padding: 70px 18px;
   }

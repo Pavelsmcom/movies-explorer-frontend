@@ -1,13 +1,13 @@
 /* normalize */
 @import url(./vendor/normalize.css);
 /* fonts */
-
-/* logo */
-
+@import url(./vendor/fonts/fonts.css);
 /* App */
 @import url(../src/components/App/App.css);
 /* Header */
 @import url(../src/components/Header/Header.css);
+/* Logo*/
+@import url(../src/components/Logo/Logo.css);
 /* Promo */
 @import url(../src/components/Promo/Promo.css);
 /* NavTab */
@@ -38,3 +38,9 @@
 @import url(../src/components/MoviesCardList/MoviesCardList.css);
 /* Burger */
 @import url(../src/components/Burger/Burger.css);
+/* Login */
+@import url(../src/components/Login/Login.css);
+/* Register */
+@import url(../src/components/Register/Register.css);
+/* PageNotFound */
+@import url(../src/components/PageNotFound/PageNotFound.css);

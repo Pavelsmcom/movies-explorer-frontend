@@ -14,3 +14,14 @@
   color: #fff;
   margin: 0;
 }
+
+@media screen and (max-width: 320px) {
+  .filter-checkbox {
+    padding-top: 42px;
+  }
+
+  .filter-checkbox__text {
+    font-size: 11px;
+    line-height: 18px;
+  }
+}

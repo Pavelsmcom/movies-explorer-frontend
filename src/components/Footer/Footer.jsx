@@ -9,16 +9,20 @@ function Footer() {
         <nav>
           <ul className="footer__link-list">
             <li>
-              <a className="footer__link" href="https://pavelsm.com" target="_blank" rel="noreferrer">Яндекс.Практикум</a>
+              <a className="footer__link" href="https://practicum.yandex.ru/" target="_blank" rel="noreferrer">
+                Яндекс.Практикум
+              </a>
             </li>
             <li>
-              <a className="footer__link" href="https://pavelsm.com" target="_blank" rel="noreferrer">Github</a>
+              <a className="footer__link" href="https://github.com/Pavelsmcom" target="_blank" rel="noreferrer">
+                Github
+              </a>
             </li>
           </ul>
         </nav>
       </div>
     </footer>
-    );
+  );
 }
 
 export default Footer;

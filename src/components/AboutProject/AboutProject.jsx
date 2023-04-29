@@ -1,9 +1,9 @@
-import SubHeader from "../SubHeader/SubHeader";
+import SubHeader from '../SubHeader/SubHeader';
 
 function AboutProject() {
   return (
-    <section className="about-project">
-      <SubHeader title="О проекте"/>
+    <section className="about-project" id="about-project">
+      <SubHeader title="О проекте" />
       <div className="about-project__text-container">
         <div className="about-project__text-block">
           <h3 className="about-project__header">Дипломный проект включал 5 этапов</h3>
@@ -24,7 +24,8 @@ function AboutProject() {
           <div className="about-project__progress-text">Front-end</div>
         </div>
       </div>
-    </section> );
+    </section>
+  );
 }
 
 export default AboutProject;

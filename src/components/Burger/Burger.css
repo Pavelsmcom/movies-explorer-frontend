@@ -1,13 +1,5 @@
 .burger {
-  width: 28px;
-  height: 23px;
-  display: block;
-  border: none;
-  padding: 0;
-  background-color: inherit;
-  align-self: center;
-  margin-right: 8px;
-  cursor: pointer;
+  display: none;
 }
 
 .burger__line {
@@ -31,4 +23,37 @@
 }
 .burger__line_position_3 {
   transform: translateY(7px);
+}
+
+@media screen and (max-width: 768px) {
+  .burger {
+    width: 28px;
+    height: 23px;
+    display: block;
+    border: none;
+    padding: 0;
+    background-color: inherit;
+    align-self: center;
+    margin-right: 8px;
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .burger {
+    width: 22px;
+    height: 20.5px;
+  }
+
+  .burger__line {
+    height: 2.5px;
+  }
+
+  .burger__line_position_1_open {
+    transform: translateY(2.5px) rotate(45deg);
+  }
+
+  .burger__line_position_3_open {
+    transform: translateY(-2.5px) rotate(-45deg);
+  }
 }
