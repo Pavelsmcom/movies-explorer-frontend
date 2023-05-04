@@ -1,30 +1,22 @@
 import { Link } from 'react-router-dom';
 
-import Logo from '../Logo/Logo';
+import WelcomeMessage from '../WelcomeMessage/WelcomeMessage';
+import AuthForm from '../AuthForm/AuthForm';
+import Input from '../Input/Input';
+import AuthBtn from '../AuthBtn/AuthBtn';
+import AuthLink from '../AuthLink/AuthLink';
 
 function Login() {
   return (
     <main>
       <section className="login">
-        <Logo />
-        <h2 className="login__header">Рады видеть!</h2>
-        <form name="login" className="login__form" noValidate={true}>
-          <p className="login__form-text">E-mail</p>
-          <input className="login__input" type="email" name="email" required={true} minLength={2} maxLength={40} />
-          <p className="login__form-error"></p>
-          <p className="login__form-text">Пароль</p>
-          <input className="login__input" type="password" name="password" required={true} minLength={4} maxLength={12} />
-          <p className="login__form-error"></p>
-          <button className="login__btn" type="submit" name="edit_btn">
-            Войти
-          </button>
-          <p className="login__text">
-            Ещё не зарегистрированы?{' '}
-            <Link to="/signup" className="login__link">
-              Регистрация
-            </Link>
-          </p>
-        </form>
+        <WelcomeMessage text="Рады видеть!" />
+        <AuthForm>
+          <Input text="E-mail" type="email" name="email" required={true} />
+          <Input text="Пароль" textError="Что-то пошло не так..." type="password" name="password" required={true} />
+          <AuthBtn text="Войти" />
+          <AuthLink text="Ещё не зарегистрированы?" linkText="Регистрация" link="/signup" />
+        </AuthForm>
       </section>
     </main>
   );

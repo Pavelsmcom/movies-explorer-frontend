@@ -44,3 +44,17 @@
 @import url(../src/components/Register/Register.css);
 /* PageNotFound */
 @import url(../src/components/PageNotFound/PageNotFound.css);
+/* Profile */
+@import url(../src/components/Profile/Profile.css);
+/* BurgerMenu */
+@import url(../src/components/BurgerMenu/BurgerMenu.css);
+/* Navigation */
+@import url(../src/components/Navigation/Navigation.css);
+/* WelcomeMessage */
+@import url(../src/components/WelcomeMessage/WelcomeMessage.css);
+/* Input */
+@import url(../src/components/Input/Input.css);
+/* AuthBtn */
+@import url(../src/components/AuthBtn/AuthBtn.css);
+/* AuthLink */
+@import url(../src/components/AuthLink/AuthLink.css);

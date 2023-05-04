@@ -5,136 +5,16 @@
   padding-top: 70px;
 }
 
-.register__header {
-  font-style: normal;
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 29px;
-  color: #fff;
-  margin: 0;
-  padding: 38px 0;
-}
-
-.register__form {
-}
-
-.register__form-text {
-  font-style: normal;
-  font-weight: 400;
-  font-size: 10px;
-  line-height: 12px;
-  color: #8b8b8b;
-  margin: 0;
-}
-
-.register__form-error {
-  display: block;
-  min-height: 23px;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 10px;
-  line-height: 12px;
-  color: #ee3465;
-  margin: 0;
-  padding-top: 3px;
-}
-
-.register__btn {
-  height: 45px;
-  width: 100%;
-  margin: 123px 0 16px 0;
-  padding: 0;
-  border: none;
-  background: #4285f4;
-  border-radius: 3px;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 17px;
-  text-align: center;
-  color: #fff;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.register__btn:hover {
-  background: #3456f3;
-}
-
-.register__text {
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 17px;
-  text-align: center;
-  color: #8b8b8b;
-  margin: 0;
-}
-
-.register__link {
-  text-decoration: none;
-  color: #4285f4;
-  display: inline-block;
-  transition: 0.2s;
-}
-
-.register__link:hover {
-  transform: translateY(-4px);
-}
-
-.register__input {
-  background-color: inherit;
-  border: none;
-  border-bottom: 1px solid #424242;
-  width: 100%;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 17px;
-  color: #fff;
-  padding: 5px 0 10px 0;
-}
-
-.register__input:focus {
-  outline: none;
-  border-bottom: 1px solid #4285f4;
-}
-
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1279px) {
   .register {
     padding-top: 232px;
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 767px) {
   .register {
     width: 260px;
     padding-top: 56px;
     text-align: center;
-  }
-
-  .register__header {
-    padding: 48px 0 80px 0;
-  }
-
-  .register__form-text {
-    text-align: left;
-  }
-
-  .register__form-error {
-    text-align: left;
-    padding-top: 6px;
-    min-height: 18px;
-  }
-
-  .register__btn {
-    margin: 215px 0 14px 0;
-    font-size: 12px;
-    line-height: 15px;
-  }
-
-  .register__text {
-    font-size: 12px;
-    line-height: 15px;
   }
 }

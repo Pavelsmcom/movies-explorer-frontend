@@ -1,6 +1,6 @@
 import SubHeader from '../SubHeader/SubHeader';
 
-import Hero from '../../images/hero.jpg';
+import Hero from '../../images/hero.png';
 
 function AboutMe() {
   return (
@@ -15,11 +15,11 @@ function AboutMe() {
             кодить. С 2015 года работал в компании «СКБ Контур». После того, как прошёл курс по веб-разработке, начал заниматься фриланс-заказами и ушёл с
             постоянной работы.
           </p>
-          <a className="about-me__link" href="https://github.com/Pavelsmcom" target="_blank" rel="noreferrer">
+          <a className="about-me__link" href="https://github.com/Pavelsmcom" target="_blank" rel="noreferrer" lang="en">
             Github
           </a>
         </div>
-        <img className="about-me__pic" src={Hero} alt="Фото hero" />
+        <img className="about-me__pic" src={Hero} alt="Моё фото" />
       </div>
     </section>
   );

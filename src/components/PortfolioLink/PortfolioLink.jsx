@@ -1,4 +1,4 @@
-import Arrow from '../../images/portfolio_arrow.png';
+import Arrow from '../../images/portfolio_arrow.svg';
 
 function PortfolioLink({ name, link }) {
   return (
