@@ -2,7 +2,7 @@ import { NavLink, Link } from 'react-router-dom';
 
 import Acc from '../../images/acc.svg';
 
-function Navigation({ isMobileOpen }) {
+function Navigation({ isMobileOpen, closeBurgerMenu }) {
   return (
     <>
       <div className={isMobileOpen ? `navigation__films-mobile` : `navigation__films`}>
@@ -10,7 +10,11 @@ function Navigation({ isMobileOpen }) {
           <ul className="navigation__films-container">
             {isMobileOpen ? (
               <li>
-                <NavLink to="/" className={({ isActive }) => `navigation__films-link ${isActive ? 'navigation__films-link_active' : ''}`}>
+                <NavLink
+                  onClick={closeBurgerMenu}
+                  to="/"
+                  className={({ isActive }) => `navigation__films-link ${isActive ? 'navigation__films-link_active' : ''}`}
+                >
                   Главная
                 </NavLink>
               </li>
@@ -18,12 +22,20 @@ function Navigation({ isMobileOpen }) {
               ''
             )}
             <li>
-              <NavLink to="/movies" className={({ isActive }) => `navigation__films-link ${isActive ? 'navigation__films-link_active' : ''}`}>
+              <NavLink
+                onClick={closeBurgerMenu}
+                to="/movies"
+                className={({ isActive }) => `navigation__films-link ${isActive ? 'navigation__films-link_active' : ''}`}
+              >
                 Фильмы
               </NavLink>
             </li>
             <li>
-              <NavLink to="/saved-movies" className={({ isActive }) => `navigation__films-link ${isActive ? 'navigation__films-link_active' : ''}`}>
+              <NavLink
+                onClick={closeBurgerMenu}
+                to="/saved-movies"
+                className={({ isActive }) => `navigation__films-link ${isActive ? 'navigation__films-link_active' : ''}`}
+              >
                 Сохранённые фильмы
               </NavLink>
             </li>
@@ -31,7 +43,7 @@ function Navigation({ isMobileOpen }) {
         </nav>
       </div>
       <div className={isMobileOpen ? `navigation__acc-container-mobile` : `navigation__acc-container`}>
-        <Link to="/profile" className="navigation__acc-container-link">
+        <Link onClick={closeBurgerMenu} to="/profile" className="navigation__acc-container-link">
           Аккаунт
         </Link>
         <div className="navigation__acc-container-border">

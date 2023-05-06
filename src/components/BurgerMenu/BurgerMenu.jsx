@@ -5,7 +5,7 @@ function BurgerMenu({ isOpen, onClose }) {
     <section className="burger-menu burger-menu_opened">
       <div className="burger-menu__container">
         <button className="burger-menu__close-btn" onClick={onClose}></button>
-        <Navigation isMobileOpen={isOpen} />
+        <Navigation isMobileOpen={isOpen} closeBurgerMenu={onClose} />
       </div>
     </section>
   ) : (

@@ -1,0 +1,22 @@
+.movies-btn {
+  width: 100%;
+  padding: 10px 0;
+  background: #2f2f2f;
+  border: none;
+  border-radius: 6px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  text-align: center;
+  color: #ffffff;
+  cursor: pointer;
+  border: 1px solid #202020;
+  transition: 0.2s;
+}
+
+.movies-btn:hover {
+  background-color: inherit;
+  border: 1px solid #424242;
+  color: #fff;
+}

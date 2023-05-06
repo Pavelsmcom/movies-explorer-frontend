@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import Close from '../../images/movie_close.svg';
 
-function MoviesCard({ text, duration, pic }) {
+function MoviesCard({ text, duration, pic, positionSavedMovies }) {
   const [isFilmSaved, setIsFilmSaved] = useState(false);
 
   function handleSaveFilmClick() {
@@ -9,7 +10,11 @@ function MoviesCard({ text, duration, pic }) {
   return (
     <article className="movies-card">
       <img className="movies-card__pic" src={pic} alt={`Изображение ${'movie.name'} не загрузилось`} />
-      {isFilmSaved ? (
+      {positionSavedMovies ? (
+        <button className="movies-card__saved-movies-btn" type="button" aria-label="Кнопка удаления">
+          <img className="movies-card__saved-movies-btn-pic" src={Close} alt="Иконка закрытия" />
+        </button>
+      ) : isFilmSaved ? (
         <button className="movies-card__save-btn movies-card__save-btn_active" type="button" aria-label="Кнопка сохранения" onClick={handleSaveFilmClick}>
           &#10003;
         </button>

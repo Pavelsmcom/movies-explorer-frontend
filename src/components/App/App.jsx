@@ -11,23 +11,17 @@ import Profile from '../Profile/Profile';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
+import InfoTooltip from '../InfoTooltip/InfoTooltip';
 
 const auth = true;
 
 function App() {
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
-
-  function openBurgerMenu() {
-    setIsBurgerMenuOpen(true);
-  }
-
-  function closeBurgerMenu() {
-    setIsBurgerMenuOpen(false);
-  }
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   return (
     <div className="page">
-      <Header auth={auth} isBurgerMenuOpen={isBurgerMenuOpen} onBurgerMenuClick={openBurgerMenu} />
+      <Header auth={auth} isBurgerMenuOpen={isBurgerMenuOpen} onBurgerMenuClick={() => setIsBurgerMenuOpen(true)} />
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/movies" element={<Movies />} />
@@ -38,19 +32,10 @@ function App() {
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       <Footer />
-      <BurgerMenu isOpen={isBurgerMenuOpen} onClose={closeBurgerMenu} />
+      <BurgerMenu isOpen={isBurgerMenuOpen} onClose={() => setIsBurgerMenuOpen(false)} />
+      <InfoTooltip isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} />
     </div>
   );
 }
 
 export default App;
-
-// lang="en" добавить
-//aria-label="Секция с фото-карточками"
-
-//  NEW NEW NEW
-// закрывать меню бокове по нажатию на ссылку
-
-//page not found закончил
-
-//validation!!!

@@ -10,15 +10,15 @@
   transform: translateY(-4px);
 }
 
+.portfolio__element:last-child {
+  border: none;
+}
+
 .portfolio__link {
   display: flex;
   justify-content: space-between;
   align-items: center;
   text-decoration: none;
-}
-
-.portfolio__element:last-child {
-  border: none;
 }
 
 .portfolio__text {

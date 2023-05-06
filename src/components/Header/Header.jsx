@@ -1,9 +1,10 @@
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import Logo from '../Logo/Logo';
 import Navigation from '../Navigation/Navigation';
 import Burger from '../Burger/Burger';
+import AuthMenu from '../AuthMenu/AuthMenu';
 
 function Header({ auth, onBurgerMenuClick, isBurgerMenuOpen }) {
   const location = useLocation();
@@ -24,18 +25,11 @@ function Header({ auth, onBurgerMenuClick, isBurgerMenuOpen }) {
           <Logo />
           {auth ? (
             <>
-              <Navigation auth={auth} onBurgerMenuClick={onBurgerMenuClick} isBurgerMenuOpen={isBurgerMenuOpen} />
+              <Navigation />
               <Burger onBurgerMenuClick={onBurgerMenuClick} isBurgerMenuOpen={isBurgerMenuOpen} />
             </>
           ) : (
-            <div className="navigation__btn-container">
-              <Link to="/signup">
-                <button className="navigation__btn">Регистрация</button>
-              </Link>
-              <Link to="/signin">
-                <button className="navigation__btn-active">Войти</button>
-              </Link>
-            </div>
+            <AuthMenu />
           )}
         </>
       ) : (

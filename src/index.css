@@ -36,6 +36,8 @@
 @import url(../src/components/MoviesCard/MoviesCard.css);
 /* MoviesCardList */
 @import url(../src/components/MoviesCardList/MoviesCardList.css);
+/* MoviesBtn */
+@import url(../src/components/MoviesBtn/MoviesBtn.css);
 /* Burger */
 @import url(../src/components/Burger/Burger.css);
 /* Login */
@@ -54,7 +56,15 @@
 @import url(../src/components/WelcomeMessage/WelcomeMessage.css);
 /* Input */
 @import url(../src/components/Input/Input.css);
+/* AuthForm */
+@import url(../src/components/AuthForm/AuthForm.css);
 /* AuthBtn */
 @import url(../src/components/AuthBtn/AuthBtn.css);
 /* AuthLink */
 @import url(../src/components/AuthLink/AuthLink.css);
+/* AuthMenu */
+@import url(../src/components/AuthMenu/AuthMenu.css);
+/* PopupWithForm */
+@import url(../src/components/PopupWithForm/PopupWithForm.css);
+/* InfoTooltip */
+@import url(../src/components/InfoTooltip/InfoTooltip.css);

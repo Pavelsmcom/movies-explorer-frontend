@@ -1,3 +1,4 @@
+import MoviesBtn from '../MoviesBtn/MoviesBtn';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
 const movies = [
@@ -63,21 +64,15 @@ const movies = [
   },
 ];
 
-const moviesElements = movies.map((movie) => {
-  return <MoviesCard text={movie.text} duration={movie.duration} pic={movie.pic} key={movie.pic} />;
-});
+function MoviesCardList({ positionSavedMovies }) {
+  const moviesElements = movies.map((movie) => {
+    return <MoviesCard text={movie.text} duration={movie.duration} pic={movie.pic} key={movie.pic} positionSavedMovies={positionSavedMovies} />;
+  });
 
-function MoviesCardList({ positionSavedMovies = false }) {
   return (
     <section className="movies-card-list">
       <ul className="movies-card-list__movies">{moviesElements}</ul>
-      {positionSavedMovies ? (
-        ''
-      ) : (
-        <button className="movies-card-list__more-btn" type="button" aria-label="Кнопка загрузки дополнительных фильмов">
-          Ещё
-        </button>
-      )}
+      {positionSavedMovies ? '' : <MoviesBtn text="Ещё" />}
     </section>
   );
 }

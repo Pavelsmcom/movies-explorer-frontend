@@ -1,3 +1,5 @@
+import { useFormWithValidation } from '../../utils/hooks/useFormWithValidation';
+
 import WelcomeMessage from '../WelcomeMessage/WelcomeMessage';
 import AuthForm from '../AuthForm/AuthForm';
 import Input from '../Input/Input';
@@ -5,17 +7,54 @@ import AuthBtn from '../AuthBtn/AuthBtn';
 import AuthLink from '../AuthLink/AuthLink';
 
 function Register() {
+  const { values, handleChange, onBlur, errors, isValid } = useFormWithValidation();
+
   return (
     <main>
       <section className="register">
-        <WelcomeMessage text="Добро пожаловать!" />
-        <AuthForm>
-          <Input text="Имя" type="text" name="name" required={true} />
-          <Input text="E-mail" type="email" name="email" required={true} />
-          <Input text="Пароль" textError="Что-то пошло не так..." type="password" name="password" required={true} />
-          <AuthBtn text="Зарегистрироваться" />
-          <AuthLink text="Уже зарегистрированы?" linkText="Войти" link="/signin" />
-        </AuthForm>
+        <div className="register-container">
+          <AuthForm>
+            <div>
+              <WelcomeMessage text="Добро пожаловать!" />
+              <Input
+                value={values.name}
+                text="Имя"
+                textError={errors.name}
+                type="text"
+                name="name"
+                required={true}
+                minLength="2"
+                maxLength="30"
+                onChange={handleChange}
+                onBlur={onBlur}
+              />
+              <Input
+                value={values.name}
+                text="E-mail"
+                textError={errors.email}
+                type="email"
+                name="email"
+                required={true}
+                onChange={handleChange}
+                onBlur={onBlur}
+              />
+              <Input
+                value={values.name}
+                text="Пароль"
+                textError={errors.password}
+                type="password"
+                name="password"
+                required={true}
+                onChange={handleChange}
+                onBlur={onBlur}
+              />
+            </div>
+            <div>
+              <AuthBtn disabled={!isValid} text="Зарегистрироваться" />
+              <AuthLink text="Уже зарегистрированы?" linkText="Войти" link="/signin" />
+            </div>
+          </AuthForm>
+        </div>
       </section>
     </main>
   );

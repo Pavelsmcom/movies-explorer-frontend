@@ -1,12 +1,14 @@
 import Logo from '../Logo/Logo';
 
-function WelcomeMessage({ text }) {
+function WelcomeMessage({ text, positionProfile = false }) {
   return (
     <>
-      <Logo />
-      <h2 className="welcome__header">{text}</h2>
+      {positionProfile ? '' : <Logo />}
+      <h2 className={positionProfile ? 'welcome__header welcome__header_profile' : 'welcome__header'}>{text}</h2>
     </>
   );
 }
 
 export default WelcomeMessage;
+
+// position="profile"

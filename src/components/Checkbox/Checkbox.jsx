@@ -1,7 +1,7 @@
 function Checkbox() {
   return (
     <label className="checkbox">
-      <input type="checkbox" className="checkbox-input" />
+      <input className="checkbox-input" type="checkbox" />
       <span className="checkbox-slider"></span>
     </label>
   );

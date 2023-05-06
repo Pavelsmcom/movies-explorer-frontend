@@ -7,51 +7,6 @@
   padding: 18px 40px 38px 40px;
 }
 
-.header__btn-container {
-  display: flex;
-  justify-content: space-between;
-  width: 190px;
-  padding-top: 2px;
-}
-
-.header__btn {
-  font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 16px;
-  background-color: inherit;
-  border: none;
-  color: #fff;
-  cursor: pointer;
-  margin-top: 7px;
-  transition: 0.2s;
-}
-
-.header__btn:hover {
-  transform: translateY(-4px);
-}
-
-.header__btn-active {
-  font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 16px;
-  border: none;
-  cursor: pointer;
-  background-color: #3ddc84;
-  color: black;
-  border-radius: 3px;
-  height: 32px;
-  width: 76px;
-  margin-bottom: 6px;
-}
-
-.header__btn-active:hover {
-  background-color: inherit;
-  border: 1px solid #424242;
-  color: #fff;
-}
-
 @media screen and (max-width: 1279px) {
   .header {
     padding: 18px 30px 38px 30px;
@@ -61,24 +16,5 @@
 @media screen and (max-width: 767px) {
   .header {
     padding: 18px 14px 28px 14px;
-  }
-
-  .header__btn {
-    font-size: 10px;
-    line-height: 16px;
-    margin-bottom: 14px;
-  }
-
-  .header__btn-container {
-    width: 138px;
-  }
-
-  .header__btn-active {
-    padding: 0 12px;
-    height: 26px;
-    width: 54px;
-    margin: 4px 0 0 0;
-    font-size: 10px;
-    line-height: 16px;
   }
 }

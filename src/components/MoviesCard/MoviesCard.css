@@ -76,6 +76,29 @@
   width: 52px;
   padding: 3px 0;
   margin-top: 2px;
+  align-self: flex-start;
+}
+
+.movies-card__saved-movies-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 21px;
+  height: 21px;
+  border-radius: 50%;
+  background-color: #313131;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.movies-card__saved-movies-btn:hover {
+  background-color: #3ddc84;
+}
+
+.movies-card__saved-movies-btn-pic {
+  padding-bottom: 2px;
+  margin: 0;
 }
 
 @media screen and (max-width: 1279px) {
@@ -86,6 +109,15 @@
 
   .movies-card__footer {
     padding: 24px 0 0 0;
+  }
+
+  .movies-card__duration {
+    margin-top: 0px;
+  }
+
+  .movies-card__description {
+    height: 18px;
+    -webkit-line-clamp: 1;
   }
 }
 
@@ -108,5 +140,10 @@
     font-size: 12px;
     line-height: 15px;
     width: 240px;
+  }
+
+  .movies-card__saved-movies-btn {
+    top: 10px;
+    right: 10px;
   }
 }

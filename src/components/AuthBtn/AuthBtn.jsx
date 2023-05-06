@@ -1,6 +1,6 @@
-function AuthBtn({ text }) {
+function AuthBtn({ text, disabled }) {
   return (
-    <button className="auth-btn" type="submit" name="edit_btn">
+    <button disabled={disabled} className={disabled ? 'auth-btn auth-btn_inactive' : 'auth-btn'} type="submit" name="edit_btn">
       {text}
     </button>
   );

@@ -7,7 +7,7 @@ function Techs() {
         <SubHeader title="Технологии" />
       </div>
       <h3 className="techs__header">7 технологий</h3>
-      <p className="techs__text">На курсе веб-разработчик мы освоили технологии, которые применили в дипломном проекте</p>
+      <p className="techs__text">На&nbsp;курсе веб-разработчик мы&nbsp;освоили технологии, которые применили в&nbsp;дипломном проекте</p>
       <ul className="techs__skills">
         <li className="techs__skill" lang="en">
           HTML

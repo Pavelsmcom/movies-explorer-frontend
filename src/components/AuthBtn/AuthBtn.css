@@ -1,7 +1,7 @@
 .auth-btn {
   height: 45px;
   width: 100%;
-  margin: 123px 0 16px 0;
+  margin-bottom: 16px;
   padding: 0;
   border: none;
   background: #4285f4;
@@ -20,9 +20,14 @@
   background: #3456f3;
 }
 
+.auth-btn_inactive {
+  background: #f8f8f8;
+  color: #000;
+}
+
 @media screen and (max-width: 767px) {
   .auth-btn {
-    margin: 215px 0 14px 0;
+    margin: 0 0 14px 0;
     font-size: 12px;
     line-height: 15px;
   }

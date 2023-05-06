@@ -1,15 +1,18 @@
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function PageNotFound() {
+  const navigate = useNavigate();
+
   return (
     <main>
       <section className="page-not-found">
-        <div className="page-not-found__container">
+        <div>
           <h2 className="page-not-found__header">404</h2>
           <p className="page-not-found__text">Страница не найдена</p>
-          <Link to="/" className="page-not-found__link">
+          <button className="page-not-found__btn" onClick={() => navigate(-1, { replace: true })}>
             Назад
-          </Link>
+          </button>
         </div>
       </section>
     </main>
