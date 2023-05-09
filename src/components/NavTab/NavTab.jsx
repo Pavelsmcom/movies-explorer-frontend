@@ -23,5 +23,3 @@ function NavTab() {
 }
 
 export default NavTab;
-
-// about-project

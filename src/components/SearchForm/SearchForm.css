@@ -1,7 +1,6 @@
 .search-form {
   padding: 2px 70px 50px 70px;
-  max-width: 1280px;
-  box-sizing: border-box;
+  max-width: 1140px;
   margin: 0 auto;
   position: relative;
 }
@@ -19,9 +18,13 @@
   z-index: 1;
 }
 
+.search-form__btn:hover {
+  background: #404040;
+}
+
 .search-form__btn-icon {
-  width: 22px;
-  height: 22px;
+  width: 13px;
+  height: 13px;
 }
 
 .search-form__error {
@@ -60,6 +63,11 @@
   line-height: 34px;
   text-align: center;
   color: #8b8b8b;
+}
+
+.search-form__input:hover {
+  outline: none;
+  border-bottom: 1px solid #828282;
 }
 
 .search-form__input:focus {

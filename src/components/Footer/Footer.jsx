@@ -17,7 +17,7 @@ function Footer() {
 
   return (
     <>
-      {isVisible ? (
+      {isVisible && (
         <footer className="footer">
           <h2 className="footer__header">Учебный проект Яндекс.Практикум х BeatFilm.</h2>
           <div className="footer__container">
@@ -38,8 +38,6 @@ function Footer() {
             </nav>
           </div>
         </footer>
-      ) : (
-        ''
       )}
     </>
   );

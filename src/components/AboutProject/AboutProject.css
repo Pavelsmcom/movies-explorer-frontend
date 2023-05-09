@@ -45,6 +45,7 @@
 
 .about-project__progress-color {
   background: #303030;
+  font-style: normal;
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
@@ -55,13 +56,7 @@
 
 .about-project__progress-color_active {
   background: #3ddc84;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 17px;
-  text-align: center;
   color: #000000;
-  padding: 9px 0;
 }
 
 .about-project__progress-text {

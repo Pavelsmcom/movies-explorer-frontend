@@ -19,23 +19,19 @@ function Header({ auth, onBurgerMenuClick, isBurgerMenuOpen }) {
   }, [location]);
 
   return (
-    <header className="header">
-      {isVisible ? (
-        <>
-          <Logo />
-          {auth ? (
-            <>
-              <Navigation />
-              <Burger onBurgerMenuClick={onBurgerMenuClick} isBurgerMenuOpen={isBurgerMenuOpen} />
-            </>
-          ) : (
-            <AuthMenu />
-          )}
-        </>
-      ) : (
-        ''
-      )}
-    </header>
+    isVisible && (
+      <header className="header">
+        <Logo />
+        {auth ? (
+          <>
+            <Navigation />
+            <Burger onBurgerMenuClick={onBurgerMenuClick} isBurgerMenuOpen={isBurgerMenuOpen} />
+          </>
+        ) : (
+          <AuthMenu />
+        )}
+      </header>
+    )
   );
 }
 

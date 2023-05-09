@@ -1,4 +1,4 @@
-.input-container {
+.input {
   position: relative;
 }
 
@@ -25,7 +25,7 @@
   padding-top: 2px;
 }
 
-.input {
+.input__input {
   display: block;
   background-color: inherit;
   border: none;
@@ -40,12 +40,12 @@
   padding: 0px 0 4px 0;
 }
 
-.input:hover {
+.input__input:hover {
   outline: none;
   border-bottom: 1px solid #828282;
 }
 
-.input:focus {
+.input__input:focus {
   outline: none;
   border-bottom: 1px solid #4285f4;
 }
@@ -60,7 +60,7 @@
   top: 12px;
 }
 
-.input_profile {
+.input__input_profile {
   font-size: 11px;
   line-height: 13px;
   height: 16px;
@@ -69,18 +69,18 @@
   padding: 16px 0 0 0;
 }
 
-.input_profile:hover {
+.input__input_profile:hover {
   outline: none;
   border-bottom: 1px solid #202020;
 }
 
-.input_profile:focus {
+.input__input_profile:focus {
   outline: none;
   border-bottom: 1px solid #202020;
 }
 
 @media screen and (max-width: 767px) {
-  .input {
+  .input__input {
     padding: 0 0 4px 0;
   }
 
@@ -100,7 +100,7 @@
     top: 14px;
   }
 
-  .input_profile {
+  .input__input_profile {
     height: 12px;
     padding: 12px 0 0px 0;
   }

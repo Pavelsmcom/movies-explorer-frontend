@@ -66,13 +66,17 @@ const movies = [
 
 function MoviesCardList({ positionSavedMovies }) {
   const moviesElements = movies.map((movie) => {
-    return <MoviesCard text={movie.text} duration={movie.duration} pic={movie.pic} key={movie.pic} positionSavedMovies={positionSavedMovies} />;
+    return (
+      <li>
+        <MoviesCard text={movie.text} duration={movie.duration} pic={movie.pic} key={movie.pic} positionSavedMovies={positionSavedMovies} />
+      </li>
+    );
   });
 
   return (
-    <section className="movies-card-list">
+    <section className="movies-card-list" aria-label="Секция с фильмами">
       <ul className="movies-card-list__movies">{moviesElements}</ul>
-      {positionSavedMovies ? '' : <MoviesBtn text="Ещё" />}
+      {!positionSavedMovies && <MoviesBtn text="Ещё" />}
     </section>
   );
 }

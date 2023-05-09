@@ -5,27 +5,25 @@ import Acc from '../../images/acc.svg';
 function Navigation({ isMobileOpen, closeBurgerMenu }) {
   return (
     <>
-      <div className={isMobileOpen ? `navigation__films-mobile` : `navigation__films`}>
+      <div className={isMobileOpen ? `navigation-films navigation-films_mobile` : `navigation-films`}>
         <nav>
-          <ul className="navigation__films-container">
-            {isMobileOpen ? (
+          <ul className="navigation-films__container">
+            {isMobileOpen && (
               <li>
                 <NavLink
                   onClick={closeBurgerMenu}
                   to="/"
-                  className={({ isActive }) => `navigation__films-link ${isActive ? 'navigation__films-link_active' : ''}`}
+                  className={({ isActive }) => `navigation-films__link ${isActive ? 'navigation-films__link navigation-films__link_active' : ''}`}
                 >
                   Главная
                 </NavLink>
               </li>
-            ) : (
-              ''
             )}
             <li>
               <NavLink
                 onClick={closeBurgerMenu}
                 to="/movies"
-                className={({ isActive }) => `navigation__films-link ${isActive ? 'navigation__films-link_active' : ''}`}
+                className={({ isActive }) => `navigation-films__link ${isActive ? 'navigation-films__link navigation-films__link_active' : ''}`}
               >
                 Фильмы
               </NavLink>
@@ -34,7 +32,7 @@ function Navigation({ isMobileOpen, closeBurgerMenu }) {
               <NavLink
                 onClick={closeBurgerMenu}
                 to="/saved-movies"
-                className={({ isActive }) => `navigation__films-link ${isActive ? 'navigation__films-link_active' : ''}`}
+                className={({ isActive }) => `navigation-films__link ${isActive ? 'navigation-films__link navigation-films__link_active' : ''}`}
               >
                 Сохранённые фильмы
               </NavLink>
@@ -42,11 +40,11 @@ function Navigation({ isMobileOpen, closeBurgerMenu }) {
           </ul>
         </nav>
       </div>
-      <div className={isMobileOpen ? `navigation__acc-container-mobile` : `navigation__acc-container`}>
-        <Link onClick={closeBurgerMenu} to="/profile" className="navigation__acc-container-link">
+      <div className={isMobileOpen ? `navigation-acc navigation-acc_mobile` : `navigation-acc`}>
+        <Link onClick={closeBurgerMenu} to="/profile" className="navigation-acc__link">
           Аккаунт
         </Link>
-        <div className="navigation__acc-container-border">
+        <div className="navigation-acc__border">
           <img src={Acc} alt="Логотип аккаунта" />
         </div>
       </div>

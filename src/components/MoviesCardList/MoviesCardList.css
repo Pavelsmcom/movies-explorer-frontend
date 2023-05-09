@@ -7,7 +7,7 @@
 }
 
 .movies-card-list__movies {
-  max-width: 1280px;
+  max-width: 1140px;
   margin: 0 auto;
   padding: 0 0 60px 0;
   display: flex;
@@ -25,6 +25,7 @@
   }
 
   .movies-card-list__movies {
+    max-width: 708px;
     row-gap: 47px;
     padding: 0 0 60px 0;
   }
@@ -37,6 +38,7 @@
   }
 
   .movies-card-list__movies {
+    max-width: 300px;
     row-gap: 38px;
     padding: 0 0 62px 0;
     justify-content: center;
