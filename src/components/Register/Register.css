@@ -1,27 +1,23 @@
 .register {
-  width: 396px;
-  margin: 0 auto;
-  padding-top: 70px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
 
 .register-container {
   height: 560px;
-}
-
-@media screen and (max-width: 1279px) {
-  .register {
-    padding-top: 232px;
-  }
+  width: 396px;
 }
 
 @media screen and (max-width: 767px) {
   .register {
-    width: 260px;
-    padding-top: 56px;
     text-align: center;
   }
 
   .register-container {
     height: 695px;
+    width: 260px;
   }
 }

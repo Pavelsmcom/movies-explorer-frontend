@@ -1,27 +1,23 @@
 .login {
-  width: 396px;
-  margin: 0 auto;
-  padding-top: 70px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
 
 .login-container {
   height: 560px;
-}
-
-@media screen and (max-width: 1279px) {
-  .login {
-    padding-top: 232px;
-  }
+  width: 396px;
 }
 
 @media screen and (max-width: 767px) {
   .login {
-    width: 260px;
-    padding-top: 56px;
     text-align: center;
   }
 
   .login-container {
-    height: 694px;
+    height: 695px;
+    width: 260px;
   }
 }
