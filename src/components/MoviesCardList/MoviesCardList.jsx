@@ -67,8 +67,8 @@ const movies = [
 function MoviesCardList({ positionSavedMovies }) {
   const moviesElements = movies.map((movie) => {
     return (
-      <li>
-        <MoviesCard text={movie.text} duration={movie.duration} pic={movie.pic} key={movie.pic} positionSavedMovies={positionSavedMovies} />
+      <li key={movie.pic}>
+        <MoviesCard text={movie.text} duration={movie.duration} pic={movie.pic} positionSavedMovies={positionSavedMovies} />
       </li>
     );
   });
