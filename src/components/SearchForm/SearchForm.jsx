@@ -7,7 +7,7 @@ function SearchForm() {
   return (
     <section className="search-form" aria-label="Секция поиска">
       <form name="search-form__films">
-        <button type="button" className="search-form__btn">
+        <button type="submit" className="search-form__btn">
           <img className="search-form__btn-icon" src={SearchIcon} alt="Знак поиска" />
         </button>
         <div className="search-form__error"></div>
