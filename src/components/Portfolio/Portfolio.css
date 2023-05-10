@@ -1,0 +1,39 @@
+.portfolio{
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 40px 170px 40px;
+}
+
+.portfolio__header{
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 20px;
+  color: #8B8B8B;
+  mix-blend-mode: normal;
+  margin: 0;
+  padding-bottom: 16px;
+}
+
+.portfolio__list{
+  list-style: none;
+  padding: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .portfolio{
+    padding: 0 50px 134px 50px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .portfolio{
+    padding: 0 14px 116px 14px;
+  }
+
+  .portfolio__header{
+    font-size: 14px;
+    line-height: 20px;
+    padding-bottom: 5px;
+  }
+}

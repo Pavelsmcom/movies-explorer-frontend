@@ -1,0 +1,163 @@
+.about-project {
+  padding: 110px 40px;
+  color: #fff;
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+.about-project__text-container {
+  display: flex;
+  gap: 40px;
+}
+
+.about-project__text-block {
+  max-width: 550px;
+  padding-top: 70px;
+}
+
+.about-project__header {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.04em;
+  margin: 0;
+  padding-bottom: 26px;
+}
+
+.about-project__text {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  margin: 0;
+}
+
+.about-project__progress {
+  display: flex;
+  width: 100%;
+  flex-shrink: 0;
+  padding-top: 110px;
+}
+
+.about-project__progress-back-end {
+  width: 20%;
+}
+
+.about-project__progress-color {
+  background: #303030;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #ffffff;
+  padding: 9px 0;
+}
+
+.about-project__progress-color_active {
+  background: #3ddc84;
+  color: #000000;
+}
+
+.about-project__progress-text {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #8b8b8b;
+  padding-top: 14px;
+}
+
+.about-project__progress-front-end {
+  width: 80%;
+}
+
+@media screen and (max-width: 1279px) {
+  .about-project {
+    padding: 88px 50px;
+  }
+
+  .about-project__header {
+    padding-bottom: 22px;
+  }
+
+  .about-project__text-container {
+    gap: 35px;
+  }
+
+  .about-project__text {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .about-project__progress {
+    padding-top: 93px;
+  }
+
+  .about-project__progress-front-end {
+    width: 79%;
+  }
+
+  .about-project__progress-back-end {
+    width: 21%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .about-project {
+    padding: 71px 18px;
+  }
+
+  .about-project__header {
+    font-size: 18px;
+    line-height: 22px;
+    padding-bottom: 16px;
+  }
+
+  .about-project__text {
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  .about-project__text-container {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .about-project__text-block {
+    padding-top: 59px;
+  }
+
+  .about-project__progress {
+    padding-top: 59px;
+  }
+
+  .about-project__progress-color {
+    font-size: 11px;
+    line-height: 13px;
+    padding: 10px 0;
+  }
+
+  .about-project__progress-color_active {
+    font-size: 11px;
+    line-height: 13px;
+    padding: 10px 0;
+  }
+
+  .about-project__progress-text {
+    font-size: 11px;
+    line-height: 13px;
+  }
+
+  .about-project__progress-front-end {
+    width: 65%;
+  }
+
+  .about-project__progress-back-end {
+    width: 35%;
+  }
+
+  .about-project__progress-text {
+    padding-top: 10px;
+  }
+}

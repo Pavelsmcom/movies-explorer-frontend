@@ -1,0 +1,17 @@
+.logo {
+  cursor: pointer;
+  width: 38px;
+  height: 38px;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.rotation {
+  animation: rotation 15s linear infinite;
+}

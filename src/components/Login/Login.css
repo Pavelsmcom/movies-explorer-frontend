@@ -1,0 +1,23 @@
+.login {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.login-container {
+  height: 560px;
+  width: 396px;
+}
+
+@media screen and (max-width: 767px) {
+  .login {
+    text-align: center;
+  }
+
+  .login-container {
+    height: 695px;
+    width: 260px;
+  }
+}

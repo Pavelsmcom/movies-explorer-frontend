@@ -1,0 +1,118 @@
+.search-form {
+  padding: 2px 70px 50px 70px;
+  max-width: 1140px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.search-form__btn {
+  position: absolute;
+  top: 47px;
+  right: 70px;
+  background: #4285f4;
+  border: none;
+  border-radius: 48px;
+  width: 80px;
+  height: 34px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.search-form__btn:hover {
+  background: #404040;
+}
+
+.search-form__btn-icon {
+  width: 13px;
+  height: 13px;
+}
+
+.search-form__error {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 34px;
+  text-align: center;
+  color: #ee3465;
+  min-height: 34px;
+  display: block;
+}
+
+.search-form__input {
+  background-color: inherit;
+  border: 0;
+  border-bottom: 1px solid #424242;
+  height: 59px;
+  width: 100%;
+  display: block;
+  padding: 0;
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 34px;
+  color: #fff;
+  text-align: center;
+  position: relative;
+  background: url(../../images/search_icon_in_circle.svg) no-repeat;
+  background-position: 0.5% 45%;
+}
+
+.search-form__input::placeholder {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 34px;
+  text-align: center;
+  color: #8b8b8b;
+}
+
+.search-form__input:hover {
+  outline: none;
+  border-bottom: 1px solid #828282;
+}
+
+.search-form__input:focus {
+  outline: none;
+  border-bottom: 1px solid #4285f4;
+  background: inherit;
+}
+
+@media screen and (max-width: 1279px) {
+  .search-form {
+    padding: 18px 30px 50px 30px;
+  }
+
+  .search-form__input {
+    background-position: 0.7% 45%;
+  }
+
+  .search-form__btn {
+    top: 63px;
+    right: 30px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .search-form {
+    padding: 19px 14px 50px 14px;
+  }
+
+  .search-form__btn {
+    top: 79px;
+    right: 14px;
+  }
+
+  .search-form__input::placeholder {
+    font-size: 18px;
+    line-height: 22px;
+    text-align: left;
+  }
+
+  .search-form__input {
+    padding-top: 10px;
+    text-align: left;
+  }
+
+  .search-form__input {
+    background: inherit;
+  }
+}

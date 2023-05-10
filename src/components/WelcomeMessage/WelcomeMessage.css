@@ -1,0 +1,31 @@
+.welcome__header {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  color: #fff;
+  margin: 0;
+  padding: 36px 0;
+}
+
+.welcome__header_profile {
+  text-align: center;
+  margin: 0 auto;
+  padding: 0 0 103px 0;
+}
+
+@media screen and (max-width: 1279px) {
+  .welcome__header_profile {
+    padding: 163px 0 74px 0;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .welcome__header {
+    padding: 48px 0 80px 0;
+  }
+
+  .welcome__header_profile {
+    padding: 2px 0 68px 0;
+  }
+}

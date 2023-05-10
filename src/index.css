@@ -1,0 +1,70 @@
+/* normalize */
+@import url(./vendor/normalize.css);
+/* fonts */
+@import url(./vendor/fonts/fonts.css);
+/* App */
+@import url(../src/components/App/App.css);
+/* Header */
+@import url(../src/components/Header/Header.css);
+/* Logo*/
+@import url(../src/components/Logo/Logo.css);
+/* Promo */
+@import url(../src/components/Promo/Promo.css);
+/* NavTab */
+@import url(../src/components/NavTab/NavTab.css);
+/* SubHeader */
+@import url(../src/components/SubHeader/SubHeader.css);
+/* AboutProject */
+@import url(../src/components/AboutProject/AboutProject.css);
+/* Tech */
+@import url(../src/components/Techs/Techs.css);
+/* AboutMe */
+@import url(../src/components/AboutMe/AboutMe.css);
+/* Portfolio */
+@import url(../src/components/Portfolio/Portfolio.css);
+/* PortfolioLink */
+@import url(../src/components/PortfolioLink/PortfolioLink.css);
+/* Footer */
+@import url(../src/components/Footer/Footer.css);
+/* Search-form */
+@import url(../src/components/SearchForm/SearchForm.css);
+/* Filter-checkbox */
+@import url(../src/components/FilterCheckbox/FilterCheckbox.css);
+/* Checkbox */
+@import url(../src/components/Checkbox/Checkbox.css);
+/* MoviesCard */
+@import url(../src/components/MoviesCard/MoviesCard.css);
+/* MoviesCardList */
+@import url(../src/components/MoviesCardList/MoviesCardList.css);
+/* MoviesBtn */
+@import url(../src/components/MoviesBtn/MoviesBtn.css);
+/* Burger */
+@import url(../src/components/Burger/Burger.css);
+/* Login */
+@import url(../src/components/Login/Login.css);
+/* Register */
+@import url(../src/components/Register/Register.css);
+/* PageNotFound */
+@import url(../src/components/PageNotFound/PageNotFound.css);
+/* Profile */
+@import url(../src/components/Profile/Profile.css);
+/* BurgerMenu */
+@import url(../src/components/BurgerMenu/BurgerMenu.css);
+/* Navigation */
+@import url(../src/components/Navigation/Navigation.css);
+/* WelcomeMessage */
+@import url(../src/components/WelcomeMessage/WelcomeMessage.css);
+/* Input */
+@import url(../src/components/Input/Input.css);
+/* AuthForm */
+@import url(../src/components/AuthForm/AuthForm.css);
+/* AuthBtn */
+@import url(../src/components/AuthBtn/AuthBtn.css);
+/* AuthLink */
+@import url(../src/components/AuthLink/AuthLink.css);
+/* AuthMenu */
+@import url(../src/components/AuthMenu/AuthMenu.css);
+/* PopupWithForm */
+@import url(../src/components/PopupWithForm/PopupWithForm.css);
+/* InfoTooltip */
+@import url(../src/components/InfoTooltip/InfoTooltip.css);

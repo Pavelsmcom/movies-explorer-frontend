@@ -1,0 +1,89 @@
+.profile {
+  height: 100vh;
+  width: 410px;
+  margin: 0 auto;
+  padding-top: 50px;
+}
+
+.profile__container {
+  height: 354px;
+}
+
+.profile__btn-submit {
+  display: block;
+  margin: 0 auto;
+  background-color: inherit;
+  border: none;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  text-align: center;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.profile__btn-submit:hover {
+  transform: translateY(-4px);
+}
+
+.profile__btn-submit_inactive {
+  color: #808080;
+}
+
+.profile__btn-logout {
+  display: block;
+  margin: 16px auto 0 auto;
+  background-color: inherit;
+  border: none;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  text-align: center;
+  color: #ee3465;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.profile__btn-logout:hover {
+  transform: translateY(4px);
+}
+
+.profile__line {
+  display: block;
+  border-bottom: 1px solid #424242;
+}
+
+@media screen and (max-width: 1279px) {
+  .profile__btn-submit {
+    margin: 0 auto;
+  }
+
+  .profile__container {
+    height: 344px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .profile {
+    width: 260px;
+    padding-top: 56px;
+    text-align: center;
+  }
+  .profile__btn-submit {
+    margin: 0 auto 14px auto;
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .profile__btn-logout {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .profile__container {
+    height: 500px;
+  }
+}
