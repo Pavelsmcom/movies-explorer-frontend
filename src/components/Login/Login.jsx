@@ -1,4 +1,5 @@
-import { useFormWithValidation } from '../../utils/hooks/useFormWithValidation';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 import WelcomeMessage from '../WelcomeMessage/WelcomeMessage';
 import AuthForm from '../AuthForm/AuthForm';
@@ -6,18 +7,25 @@ import Input from '../Input/Input';
 import AuthBtn from '../AuthBtn/AuthBtn';
 import AuthLink from '../AuthLink/AuthLink';
 
-function Login() {
+import { useFormWithValidation } from '../../utils/hooks/useFormWithValidation';
+
+function Login({ handleLogin }) {
   const { values, handleChange, onBlur, errors, isValid } = useFormWithValidation();
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    handleLogin({ password: values['password'], email: values['email'] });
+  }
 
   return (
     <main>
       <section className="login">
         <div className="login-container">
-          <AuthForm>
+          <AuthForm onSubmit={handleSubmit}>
             <div>
               <WelcomeMessage text="Рады видеть!" />
               <Input
-                value={values.name}
+                value={values['email'] || ''}
                 text="E-mail"
                 textError={errors.email}
                 type="email"
@@ -27,7 +35,7 @@ function Login() {
                 onBlur={onBlur}
               />
               <Input
-                value={values.name}
+                value={values['password'] || ''}
                 text="Пароль"
                 textError={errors.password}
                 type="password"

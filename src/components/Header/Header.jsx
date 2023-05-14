@@ -1,14 +1,16 @@
 import { useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 import Logo from '../Logo/Logo';
 import Navigation from '../Navigation/Navigation';
 import Burger from '../Burger/Burger';
 import AuthMenu from '../AuthMenu/AuthMenu';
 
-function Header({ auth, onBurgerMenuClick, isBurgerMenuOpen }) {
+function Header({ onBurgerMenuClick, isBurgerMenuOpen, loggedIn }) {
   const location = useLocation();
   const [isVisible, setIsVisible] = useState(false);
+  const currentUser = useContext(CurrentUserContext);
 
   useEffect(() => {
     if (location.pathname === '/' || location.pathname === '/movies' || location.pathname === '/saved-movies' || location.pathname === '/profile') {
@@ -22,7 +24,7 @@ function Header({ auth, onBurgerMenuClick, isBurgerMenuOpen }) {
     isVisible && (
       <header className="header">
         <Logo />
-        {auth ? (
+        {loggedIn ? (
           <>
             <Navigation />
             <Burger onBurgerMenuClick={onBurgerMenuClick} isBurgerMenuOpen={isBurgerMenuOpen} />

@@ -6,18 +6,23 @@ import Input from '../Input/Input';
 import AuthBtn from '../AuthBtn/AuthBtn';
 import AuthLink from '../AuthLink/AuthLink';
 
-function Register() {
+function Register({ handleRegister }) {
   const { values, handleChange, onBlur, errors, isValid } = useFormWithValidation();
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    handleRegister({ name: values['name'], password: values['password'], email: values['email'] });
+  }
 
   return (
     <main>
       <section className="register">
         <div className="register-container">
-          <AuthForm>
+          <AuthForm onSubmit={handleSubmit}>
             <div>
               <WelcomeMessage text="Добро пожаловать!" />
               <Input
-                value={values.name}
+                value={values['name'] || ''}
                 text="Имя"
                 textError={errors.name}
                 type="text"
@@ -27,9 +32,10 @@ function Register() {
                 maxLength="30"
                 onChange={handleChange}
                 onBlur={onBlur}
+                pattern="^[A-Za-zА-Яа-яЁё0-9\s\-]*$"
               />
               <Input
-                value={values.name}
+                value={values['email'] || ''}
                 text="E-mail"
                 textError={errors.email}
                 type="email"
@@ -39,7 +45,7 @@ function Register() {
                 onBlur={onBlur}
               />
               <Input
-                value={values.name}
+                value={values['password'] || ''}
                 text="Пароль"
                 textError={errors.password}
                 type="password"

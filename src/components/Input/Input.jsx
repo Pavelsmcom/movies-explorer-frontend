@@ -1,4 +1,4 @@
-function Input({ text, textError, value, positionProfile = false, ...props }) {
+function Input({ text, textError, positionProfile = false, ...props }) {
   return (
     <>
       <div className="input">

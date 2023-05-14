@@ -1,9 +1,9 @@
 import Checkbox from '../Checkbox/Checkbox';
 
-function FilterCheckbox() {
+function FilterCheckbox({ changeMoviesDurationCheckBox, isMoviesDurationCheckBoxEnable }) {
   return (
     <div className="filter-checkbox">
-      <Checkbox />
+      <Checkbox changeMoviesDurationCheckBox={changeMoviesDurationCheckBox} isMoviesDurationCheckBoxEnable={isMoviesDurationCheckBoxEnable} />
       <p className="filter-checkbox__text">Короткометражки</p>
     </div>
   );
