@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 import WelcomeMessage from '../WelcomeMessage/WelcomeMessage';
@@ -11,10 +10,14 @@ import { useFormWithValidation } from '../../utils/hooks/useFormWithValidation';
 
 function Login({ handleLogin }) {
   const { values, handleChange, onBlur, errors, isValid } = useFormWithValidation();
+  const [isDisabledInput, setIsDisabledInput] = useState(false);
 
   async function handleSubmit(e) {
     e.preventDefault();
-    handleLogin({ password: values['password'], email: values['email'] });
+    // Блокирую поля формы на время отправки запроса, для этого асинхронная функция
+    setIsDisabledInput(true);
+    await handleLogin({ password: values['password'], email: values['email'] });
+    setIsDisabledInput(false);
   }
 
   return (
@@ -25,6 +28,7 @@ function Login({ handleLogin }) {
             <div>
               <WelcomeMessage text="Рады видеть!" />
               <Input
+                disabled={isDisabledInput}
                 value={values['email'] || ''}
                 text="E-mail"
                 textError={errors.email}
@@ -35,6 +39,7 @@ function Login({ handleLogin }) {
                 onBlur={onBlur}
               />
               <Input
+                disabled={isDisabledInput}
                 value={values['password'] || ''}
                 text="Пароль"
                 textError={errors.password}
@@ -46,7 +51,7 @@ function Login({ handleLogin }) {
               />
             </div>
             <div>
-              <AuthBtn disabled={!isValid} text="Войти" />
+              <AuthBtn disabled={!isValid || isDisabledInput} text="Войти" />
               <AuthLink text="Ещё не зарегистрированы?" linkText="Регистрация" link="/signup" />
             </div>
           </AuthForm>

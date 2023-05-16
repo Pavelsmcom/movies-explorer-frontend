@@ -3,9 +3,9 @@ class MoviesApi {
     this._baseUrl = optionsConnection.baseUrl;
   }
 
-  _isCorrectServerResponse(res, errorMessage) {
+  _isCorrectServerResponse(res, message) {
     if (!res.ok) {
-      throw new Error(`${errorMessage}:\n ${res.status}`);
+      throw new Error(`${message}:${res.status}`);
     }
   }
 
@@ -16,7 +16,7 @@ class MoviesApi {
         'Content-Type': 'application/json',
       },
     });
-    this._isCorrectServerResponse(res, 'Ошибка получения карточек с сервера');
+    this._isCorrectServerResponse(res, 'getInitialMovies');
     const data = await res.json();
     return data;
   }

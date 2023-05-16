@@ -11,8 +11,6 @@ function SearchForm({ searchInMovies, changeMoviesDurationCheckBox, isMoviesDura
     setInputValue(textInSearchInput);
   }, [textInSearchInput]);
 
-  // console.log(textInSearchInput);
-  // console.log(inputValue);
   function handleSubmit(e) {
     e.preventDefault();
     if (inputValue.length) {

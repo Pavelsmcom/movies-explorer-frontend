@@ -4,9 +4,9 @@ class MainApi {
     this._headers = optionsConnectionAuth.headers;
   }
 
-  _isCorrectServerResponse(res, errorMessage) {
+  _isCorrectServerResponse(res, message) {
     if (!res.ok) {
-      throw new Error(`${errorMessage}:\n ${res.status}`);
+      throw new Error(`${message}:${res.status}`);
     }
   }
 
@@ -21,7 +21,7 @@ class MainApi {
       headers: this._headers,
       body: JSON.stringify({ name: name, email: email, password: password }),
     });
-    this._isCorrectServerResponse(res, 'Ошибка регистрации пользователя');
+    this._isCorrectServerResponse(res, 'register');
     const data = await res.json();
     return data;
   }
@@ -33,7 +33,7 @@ class MainApi {
       headers: this._headers,
       body: JSON.stringify({ password: password, email: email }),
     });
-    this._isCorrectServerResponse(res, 'Ошибка авторизации пользователя');
+    this._isCorrectServerResponse(res, 'login');
     const data = await res.json();
     return data;
   }
@@ -46,7 +46,7 @@ class MainApi {
         'Content-Type': 'application/json',
       },
     });
-    this._isCorrectServerResponse(res, 'Ошибка получения данных пользователя с сервера');
+    this._isCorrectServerResponse(res, 'getUserInfo');
     const data = await res.json();
     return data;
   }
@@ -64,7 +64,7 @@ class MainApi {
         email: userInfo.email,
       }),
     });
-    this._isCorrectServerResponse(res, 'Ошибка изменения данных пользователя');
+    this._isCorrectServerResponse(res, 'updateUser');
     const data = await res.json();
     return data;
   }
@@ -91,7 +91,7 @@ class MainApi {
         nameEN: movie.nameEN,
       }),
     });
-    this._isCorrectServerResponse(res, 'Ошибка загрузки карточки на сервер');
+    this._isCorrectServerResponse(res, 'addMovie');
     const data = await res.json();
     return data;
   }
@@ -105,7 +105,7 @@ class MainApi {
         'Content-Type': 'application/json',
       },
     });
-    this._isCorrectServerResponse(res, 'Ошибка удаления карточки');
+    this._isCorrectServerResponse(res, 'deleteMovie');
   }
 
   // Получаем массив фильмов от сервера
@@ -116,7 +116,7 @@ class MainApi {
         'Content-Type': 'application/json',
       },
     });
-    this._isCorrectServerResponse(res, 'Ошибка получения сохраненных фильмов с сервера');
+    this._isCorrectServerResponse(res, 'getSavedMovie');
     const data = await res.json();
     return data;
   }

@@ -10,5 +10,3 @@ function WelcomeMessage({ text, positionProfile = false }) {
 }
 
 export default WelcomeMessage;
-
-// position="profile"

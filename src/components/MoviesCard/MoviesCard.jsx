@@ -1,18 +1,27 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Close from '../../images/movie_close.svg';
 
-function MoviesCard({ movie, positionSavedMovies, isSavedMovie, saveMovie, deleteMovie }) {
+function MoviesCard({ movie, positionSavedMovies, saveMovie, deleteMovie, isSavedMovieInitial }) {
   const { description, duration, trailerLink, url = movie.image.url, image } = movie;
+  const [isSavedMovie, setIsSavedMovie] = useState(isSavedMovieInitial);
 
-  // function handleSaveMovieClick() {
-  //   handleSaveMovie(movie);
-  // }
+  function handleSaveMovie() {
+    try {
+      saveMovie(movie);
+      setIsSavedMovie(true);
+    } catch (error) {
+      console.log();
+    }
+  }
+
+  function handleDeleteMovie() {
+    deleteMovie(movie);
+    setIsSavedMovie(false);
+  }
 
   function minutesToHoursMinutes(minutes) {
     minutes = Number(minutes);
-    const h = Math.floor(minutes / 60);
-    const m = minutes % 60;
-    return h + 'ч ' + m + 'м';
+    return Math.floor(minutes / 60) + 'ч ' + (minutes % 60) + 'м';
   }
   // todo посмотреть и вынести функцию перерасчета, чтобы она вызывалась 1 раз
   return (
@@ -25,15 +34,15 @@ function MoviesCard({ movie, positionSavedMovies, isSavedMovie, saveMovie, delet
         />
       </a>
       {positionSavedMovies ? (
-        <button className="movies-card__saved-movies-btn" type="button" aria-label="Кнопка удаления" onClick={() => deleteMovie(movie)}>
+        <button className="movies-card__saved-movies-btn" type="button" aria-label="Кнопка удаления" onClick={handleDeleteMovie}>
           <img className="movies-card__saved-movies-btn-pic" src={Close} alt="Иконка закрытия" />
         </button>
       ) : isSavedMovie ? (
-        <button className="movies-card__save-btn movies-card__save-btn_active" type="button" aria-label="Кнопка сохранения" onClick={() => saveMovie(movie)}>
+        <button className="movies-card__save-btn movies-card__save-btn_active" type="button" aria-label="Кнопка сохранения" onClick={handleDeleteMovie}>
           &#10003;
         </button>
       ) : (
-        <button className="movies-card__save-btn" type="button" aria-label="Кнопка сохранения" onClick={() => saveMovie(movie)}>
+        <button className="movies-card__save-btn" type="button" aria-label="Кнопка сохранения" onClick={handleSaveMovie}>
           Сохранить
         </button>
       )}

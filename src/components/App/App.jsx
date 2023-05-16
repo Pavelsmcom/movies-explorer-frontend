@@ -16,6 +16,7 @@ import ProtectedRouteElement from '../ProtectedRoute/ProtectedRoute';
 
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { mainApi } from '../../utils/MainApi.js';
+import { moviesApi } from '../../utils/MoviesApi.js';
 import { errors } from '../../utils/constants.js';
 
 function App() {
@@ -24,10 +25,13 @@ function App() {
   const [serverResponseStatus, setServerResponseStatus] = useState({ status: true, text: '' });
   const [currentUser, setCurrentUser] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false); // для управления защищёнными роутами
+  const [allMovies, setAllMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
+  const [isPreloaderVisible, setIsPreloaderVisible] = useState(false);
 
   const navigate = useNavigate();
 
+  //hooks:
   useEffect(() => {
     (async () => {
       const jwt = localStorage.getItem('jwt');
@@ -38,14 +42,18 @@ function App() {
           setCurrentUser((user) => ({ ...user, name: name, email: email, _id: _id }));
           setLoggedIn(true);
         } catch (error) {
-          // ошибка с  JWT токеном
+          if (error == 'Error: getUserInfo:401') {
+            setServerResponseStatus({ status: false, text: errors.loginTokenIncorrect });
+          } else {
+            setServerResponseStatus({ status: false, text: errors.error500 });
+          }
           setIsPopupOpen(true);
-          setServerResponseStatus({ status: false, text: errors.login });
         }
       }
     })();
-  }, [navigate]);
+  }, []);
 
+  //functions:
   async function handleLogin(user) {
     try {
       const data = await mainApi.login(user);
@@ -58,8 +66,15 @@ function App() {
         navigate('/movies', { replace: true });
       }
     } catch (error) {
+      if (error == 'Error: login:401') {
+        setServerResponseStatus({ status: false, text: errors.loginError });
+      } else if (error == 'Error: getUserInfo:401') {
+        setServerResponseStatus({ status: false, text: errors.loginTokenIncorrect });
+      } else {
+        setServerResponseStatus({ status: false, text: errors.error500 });
+      }
+      setLoggedIn(false);
       setIsPopupOpen(true);
-      setServerResponseStatus({ status: false, text: errors.login });
     }
   }
 
@@ -68,90 +83,102 @@ function App() {
       const userData = await mainApi.register(user);
       const { name, email, _id } = userData;
       setCurrentUser((user) => ({ ...user, name: name, email: email, _id: _id }));
-      try {
-        const data = await mainApi.login({ email: user.email, password: user.password });
-        if (data.token) {
-          setLoggedIn(true);
-          localStorage.setItem('jwt', data.token);
-          navigate('/movies', { replace: true });
-        }
-      } catch (error) {
-        setIsPopupOpen(true);
-        setServerResponseStatus({ status: false, text: errors.login });
+      const data = await mainApi.login({ email: user.email, password: user.password });
+      if (data.token) {
+        setLoggedIn(true);
+        localStorage.setItem('jwt', data.token);
+        navigate('/movies', { replace: true });
       }
     } catch (error) {
+      if (error == 'Error: register:409') {
+        setServerResponseStatus({ status: false, text: errors.registerEmail });
+      } else if (error == 'Error: getUserInfo:400') {
+        setServerResponseStatus({ status: false, text: errors.registerError });
+      } else {
+        setServerResponseStatus({ status: false, text: errors.error500 });
+      }
+      setLoggedIn(false);
       setIsPopupOpen(true);
-      setServerResponseStatus({ status: false, text: errors.register });
     }
   }
 
   async function handleUpdateUser(userInfo) {
-    console.log(userInfo);
     try {
-      await mainApi.setUserInfo(userInfo);
-      setCurrentUser({ ...currentUser, name: userInfo.name, about: userInfo.about });
-    } catch (error) {
+      const data = await mainApi.setUserInfo(userInfo);
+      setCurrentUser((user) => ({ ...user, name: data.name, email: data.email, _id: data._id }));
+      setServerResponseStatus({ status: true, text: errors.loginSuccess });
       setIsPopupOpen(true);
-      setServerResponseStatus({ status: false, text: errors.login });
-      // Доработать ошибку!!!
+    } catch (error) {
+      if (error == 'Error: updateUser:409') {
+        setServerResponseStatus({ status: false, text: errors.profileEmail });
+      } else if (error == 'Error: updateUser:404') {
+        setServerResponseStatus({ status: false, text: errors.profileError });
+      } else {
+        setServerResponseStatus({ status: false, text: errors.error500 });
+      }
+      setIsPopupOpen(true);
     }
   }
 
-  function handlelogOut() {
+  function handleLogout() {
     localStorage.removeItem('jwt');
+    //1605 добавить удаление фильмов при выходе из локалсторадж ???
     setLoggedIn(false);
     navigate('/', { replace: true });
   }
 
-  async function handleGetSavedMovies() {
+  async function handleGetInitialMovies() {
     try {
-      const movies = await mainApi.getSavedMovie();
-      setSavedMovies(...savedMovies, movies);
-      // setCards([newCard, ...cards]);
-      // setSavedMovies([...savedMovies, movie]);
+      setIsPreloaderVisible(true);
+      const movies = await moviesApi.getInitialMovies();
+      setAllMovies(movies);
     } catch (error) {
-      console.log(error.message);
+      setIsPreloaderVisible(false);
+      setServerResponseStatus({ status: false, text: errors.loadingMovies });
+      setIsPopupOpen(true);
+    } finally {
+      setIsPreloaderVisible(false);
     }
   }
 
+  async function handleGetSavedMovies() {
+    try {
+      setIsPreloaderVisible(true);
+      const movies = await mainApi.getSavedMovie();
+      setSavedMovies(...savedMovies, movies);
+    } catch (error) {
+      setIsPreloaderVisible(false);
+      setServerResponseStatus({ status: false, text: errors.loadingMovies });
+      setIsPopupOpen(true);
+    } finally {
+      setIsPreloaderVisible(false);
+    }
+  }
+
+  //--------------------------------------------------
   async function handleSaveMovie(movie) {
     try {
       const data = await mainApi.addMovie(movie);
-      // setCards([newCard, ...cards]);
-      // setSavedMovies([...savedMovies, movie]);
+      setSavedMovies([...savedMovies, data]);
     } catch (error) {
-      console.log(error.message);
+      setServerResponseStatus({ status: false, text: errors.loadingMovies });
+      setIsPopupOpen(true);
     }
   }
 
   async function handleDeleteMovie(movie) {
     try {
-      console.log(movie);
       await mainApi.deleteMovie(movie._id);
-
-      // const data = await mainApi.addMovie(movie);
-      // setCards([newCard, ...cards]);
-      // setSavedMovies([...savedMovies, movie]);
+      removeMovieFromPage(movie._id);
     } catch (error) {
-      console.log(error.message);
+      setServerResponseStatus({ status: false, text: errors.loadingMovies });
+      setIsPopupOpen(true);
     }
   }
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const jwt = localStorage.getItem('jwt');
-  //     if (jwt) {
-  //       try {
-  //         const data = await mainApi.checkToken(jwt);
-  //         setCurrentUser((user) => ({ ...user, email: data.email }));
-  //         // setLoggedIn(true);
-  //         navigate('/movies', { replace: true });
-  //       } catch (error) {
-  //         console.log(error.message);
-  //       }
-  //     }
-  //   })();
-  // }, [navigate]);
+  function removeMovieFromPage(movieId) {
+    setSavedMovies((prevState) => prevState.filter((m) => m._id !== movieId));
+  }
 
   return (
     <div className="page">
@@ -162,7 +189,15 @@ function App() {
             path="/movies"
             element={
               <ProtectedRouteElement loggedIn={loggedIn}>
-                <Movies saveMovie={handleSaveMovie} />
+                <Movies
+                  getInitialMovies={handleGetInitialMovies}
+                  allMovies={allMovies}
+                  saveMovie={handleSaveMovie}
+                  deleteMovie={handleDeleteMovie}
+                  getSavedMovies={handleGetSavedMovies}
+                  savedMovies={savedMovies}
+                  isPreloaderVisible={isPreloaderVisible}
+                />
               </ProtectedRouteElement>
             }
           />
@@ -178,7 +213,7 @@ function App() {
             path="/profile"
             element={
               <ProtectedRouteElement loggedIn={loggedIn}>
-                <Profile logOut={handlelogOut} onUpdateUser={handleUpdateUser} />
+                <Profile logout={handleLogout} onUpdateUser={handleUpdateUser} />
               </ProtectedRouteElement>
             }
           />
@@ -198,4 +233,9 @@ function App() {
 export default App;
 
 //todo ошибки разные обработать и выводить свои сообщения
-// Вопрос про текст ответов в фигме????
+// todo сохранение и выгрузка из локасторадж фильмов и сохранённых фильмов
+// todo стейт сохранённых фильмов сразу не меняется если перейти со страницы movie на страницу saved movies ??? Поправил может быть стало лучше
+//todo разобраться с дебаунсом debaunce on resize
+// прелоадер добавить + при первом поиске фильмов есть сообщение "Не найдено!"
+// после удаления всех картчоек появляется сообщение Неправильный запрос? БЫЛО НЕ ПУСТОЕ ПОЛЕ ЗАПРОСА
+// потом ещё еррор от сервера прилетел?

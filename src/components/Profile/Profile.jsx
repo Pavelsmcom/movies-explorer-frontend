@@ -5,17 +5,19 @@ import { useFormWithValidation } from '../../utils/hooks/useFormWithValidation';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { useContext, useEffect, useState } from 'react';
 
-function Profile({ logOut, onUpdateUser }) {
+function Profile({ logout, onUpdateUser }) {
   const [isValidForm, setIsValidForm] = useState(false);
+  const [isDisabledInput, setIsDisabledInput] = useState(false);
   const currentUser = useContext(CurrentUserContext);
   const { values, setValues, handleChange, onBlur, errors, isValid } = useFormWithValidation();
 
   // Задаём начальное состояние импутам
   useEffect(() => {
     setValues({ ...values, name: currentUser.name, email: currentUser.email });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Дополнительная  проверка формы (если значения не изменились, то форма не активна)
+  // Дополнительная  проверка формы (если значения совпадают с currentUser, то форма не активна)
   useEffect(() => {
     if (values.name === currentUser.name && values.email === currentUser.email) {
       setIsValidForm(false);
@@ -24,11 +26,15 @@ function Profile({ logOut, onUpdateUser }) {
         setIsValidForm(true);
       }
     }
-  }, [values]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [values, currentUser]);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    onUpdateUser({ name: values['name'], email: values['email'] });
+    // Блокирую поля формы на время отправки запроса, для этого асинхронная функция
+    setIsDisabledInput(true);
+    await onUpdateUser({ name: values['name'], email: values['email'] });
+    setIsDisabledInput(false);
   }
 
   return (
@@ -40,6 +46,7 @@ function Profile({ logOut, onUpdateUser }) {
             <AuthForm onSubmit={handleSubmit}>
               <div>
                 <Input
+                  disabled={isDisabledInput}
                   value={values.name || ''}
                   text="Имя"
                   textError={errors.name}
@@ -55,6 +62,7 @@ function Profile({ logOut, onUpdateUser }) {
                 />
                 <span className="profile__line"></span>
                 <Input
+                  disabled={isDisabledInput}
                   value={values.email || ''}
                   text="E-mail"
                   textError={errors.email}
@@ -68,14 +76,14 @@ function Profile({ logOut, onUpdateUser }) {
               </div>
               <div>
                 <button
-                  disabled={!isValidForm}
+                  disabled={!isValidForm || isDisabledInput}
                   className={!isValidForm ? 'profile__btn-submit profile__btn-submit_inactive' : 'profile__btn-submit'}
                   type="submit"
                   name="submit_btn"
                 >
                   Редактировать
                 </button>
-                <button className="profile__btn-logout" type="button" name="logout_btn" onClick={logOut}>
+                <button className="profile__btn-logout" type="button" name="logout_btn" onClick={logout}>
                   Выйти из аккаунта
                 </button>
               </div>

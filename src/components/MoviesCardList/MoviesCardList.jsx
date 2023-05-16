@@ -1,11 +1,24 @@
 import MoviesBtn from '../MoviesBtn/MoviesBtn';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
-function MoviesCardList({ positionSavedMovies, movies, isBtnMoreVisible, btnMoreClick, isSavedMovie, saveMovie, deleteMovie }) {
+function MoviesCardList({ positionSavedMovies, movies, savedMovies, isBtnMoreVisible, btnMoreClick, saveMovie, deleteMovie }) {
   const moviesElements = movies.map((movie) => {
+    // проверяем был ли фильм сохранён
+    let isSavedMovie = false;
+
+    if (savedMovies !== undefined && savedMovies.find((item) => item.movieId === movie.id) !== undefined) {
+      isSavedMovie = true;
+    }
+
     return (
       <li key={movie.id || movie._id}>
-        <MoviesCard movie={movie} positionSavedMovies={positionSavedMovies} isSavedMovie={isSavedMovie} saveMovie={saveMovie} deleteMovie={deleteMovie} />
+        <MoviesCard
+          movie={movie}
+          positionSavedMovies={positionSavedMovies}
+          isSavedMovieInitial={isSavedMovie}
+          saveMovie={saveMovie}
+          deleteMovie={deleteMovie}
+        />
       </li>
     );
   });

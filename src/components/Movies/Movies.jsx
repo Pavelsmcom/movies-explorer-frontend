@@ -5,11 +5,9 @@ import Preloader from '../Preloader/Preloader';
 import SearchForm from '../SearchForm/SearchForm';
 import ErrMovies from '../ErrMovies/ErrMovies';
 
-import { moviesApi } from '../../utils/MoviesApi.js';
 import { errors } from '../../utils/constants.js';
 
-function Movies({ saveMovie }) {
-  const [allMovies, setAllMovies] = useState([]);
+function Movies({ saveMovie, deleteMovie, getSavedMovies, savedMovies, getInitialMovies, allMovies, isPreloaderVisible }) {
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [textInSearchInput, setTextInSearchInput] = useState('');
   const [isShort, setIsShort] = useState(false);
@@ -18,30 +16,36 @@ function Movies({ saveMovie }) {
   const [isBtnMoreVisible, setIsBtnMoreVisible] = useState(false);
   const [isErrVisible, setIsErrVisible] = useState(false);
   const [errMessage, setErrMessage] = useState('');
-  const [isPreloaderVisible, setIsPreloaderVisible] = useState(false);
-  const [isSavedMovie, setIsSavedMovie] = useState(false);
 
   // Hooks:
   useEffect(() => {
+    // getSavedMovies();
     if (JSON.parse(localStorage.getItem('filteredMovies')) !== null) {
       //проверяем есть ли в локальном хранилище предыдущие данные
-      setIsShort(JSON.parse(localStorage.getItem('isShort')));
-      setTextInSearchInput(localStorage.getItem('textInSearchInput'));
-      setFilteredMovies(JSON.parse(localStorage.getItem('filteredMovies')));
+      // setIsShort(JSON.parse(localStorage.getItem('isShort')));
+      // setTextInSearchInput(localStorage.getItem('textInSearchInput'));
+      // setFilteredMovies(JSON.parse(localStorage.getItem('filteredMovies')));
     }
 
     window.addEventListener('resize', handleResize);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      // window.removeEventListener('resize', handleResize);
+      window.addEventListener('resize', handleResize);
     };
-  }, []); // можно добавить, handleResize можно не добавлять зависимость
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  useMemo(() => {
+  useEffect(() => {
     if (textInSearchInput !== '') {
+      // если фильмы хранятся в Localstorage, то больше их не загружаем
       if (!allMovies.length) {
         getInitialMovies();
       }
+      if (!savedMovies.length) {
+        getSavedMovies();
+      }
+
       setFilteredMovies(
         allMovies.filter((movie) => {
           if (!isShort) {
@@ -50,9 +54,9 @@ function Movies({ saveMovie }) {
           return movie.nameRU.toLowerCase().includes(textInSearchInput.toLowerCase()) && movie.duration > 40;
         })
       );
-      localStorage.setItem('textInSearchInput', textInSearchInput);
-      localStorage.setItem('isShort', isShort);
-      localStorage.setItem('filteredMovies', JSON.stringify(filteredMovies));
+      // localStorage.setItem('textInSearchInput', textInSearchInput);
+      // localStorage.setItem('isShort', isShort);
+      // localStorage.setItem('filteredMovies', JSON.stringify(filteredMovies));
     }
   }, [allMovies, textInSearchInput, isShort]);
 
@@ -75,36 +79,7 @@ function Movies({ saveMovie }) {
     return filteredMovies.slice(0, countToRender * page);
   }, [filteredMovies, page, screenWidth]);
 
-  // function handleSaveMovie(movie) {
-  // console.log('save');
-  // console.log(movie);
-  // console.log(allMovies);
-  // saveMovie(movie);
-
-  // const isSaved = card.likes.some((i) => i === currentUser._id);
-  // try {
-  //const newCard = await api.changeLike(card._id, isLiked);
-  // setCards((prevState) => prevState.map((c) => (c._id === card._id ? newCard : c)));
-  // } catch (error) {
-  // console.log(error.message);
-  // }
-  // }
-
-  // Functions:
-  async function getInitialMovies() {
-    try {
-      setIsPreloaderVisible(true);
-      const movies = await moviesApi.getInitialMovies();
-      setAllMovies(movies);
-      setIsErrVisible(false);
-    } catch (error) {
-      setIsErrVisible(true);
-      setErrMessage(errors.loadingMovies);
-    } finally {
-      setIsPreloaderVisible(false);
-    }
-  }
-
+  //function
   function handleMoreClick() {
     setPage((prev) => prev + 1);
   }
@@ -129,15 +104,14 @@ function Movies({ saveMovie }) {
       {!isPreloaderVisible && isErrVisible && <ErrMovies text={errMessage} />}
       <MoviesCardList
         movies={moviesToRender}
+        savedMovies={savedMovies}
         isBtnMoreVisible={isBtnMoreVisible}
         btnMoreClick={handleMoreClick}
-        isSavedMovie={isSavedMovie}
         saveMovie={saveMovie}
+        deleteMovie={deleteMovie}
       />
     </main>
   );
 }
 
 export default Movies;
-
-//todo разобраться с дебаунсом debaunce

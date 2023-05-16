@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+// import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 import Logo from '../Logo/Logo';
 import Navigation from '../Navigation/Navigation';
@@ -10,7 +10,7 @@ import AuthMenu from '../AuthMenu/AuthMenu';
 function Header({ onBurgerMenuClick, isBurgerMenuOpen, loggedIn }) {
   const location = useLocation();
   const [isVisible, setIsVisible] = useState(false);
-  const currentUser = useContext(CurrentUserContext);
+  // const currentUser = useContext(CurrentUserContext);
 
   useEffect(() => {
     if (location.pathname === '/' || location.pathname === '/movies' || location.pathname === '/saved-movies' || location.pathname === '/profile') {
