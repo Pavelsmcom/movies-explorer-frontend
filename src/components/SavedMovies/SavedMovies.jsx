@@ -1,26 +1,39 @@
 import { useEffect, useState } from 'react';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SearchForm from '../SearchForm/SearchForm';
+import ErrMovies from '../ErrMovies/ErrMovies';
+import Preloader from '../Preloader/Preloader';
 
 import { errors } from '../../utils/constants.js';
-import ErrMovies from '../ErrMovies/ErrMovies';
 
-function SavedMovies({ getSavedMovies, savedMovies, deleteMovie }) {
-  const [filteredMovies, setFilteredMovies] = useState([]);
+function SavedMovies({ getSavedMovies, savedMovies, deleteMovie, isPreloaderVisible, getItemSavedMovies }) {
+  const [filteredSavedMovies, setFilteredSavedMovies] = useState([]);
   const [textInSearchInput, setTextInSearchInput] = useState('');
   const [isShort, setIsShort] = useState(false);
   const [isErrVisible, setIsErrVisible] = useState(false);
   const [errMessage, setErrMessage] = useState('');
 
   // Hooks:
+  useEffect(() => {
+    //проверяем есть ли в локальном хранилище предыдущие данные
+    if (JSON.parse(localStorage.getItem('savedMovies')) !== null) {
+      getItemSavedMovies();
+    }
+
+    if (JSON.parse(localStorage.getItem('isShortSavedMovies')) !== null) {
+      setIsShort(JSON.parse(localStorage.getItem('isShortSavedMovies')));
+      setTextInSearchInput(localStorage.getItem('textInSearchInputSavedMovies'));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
-    if (textInSearchInput !== '') {
-      // если сохранённые фильмы хранятся в Localstorage, то больше их не загружаем
+    setIsErrVisible(false);
+    if (textInSearchInput !== '' && savedMovies[0] !== false) {
       if (!savedMovies.length) {
         getSavedMovies();
       }
-      setFilteredMovies(
+      setFilteredSavedMovies(
         savedMovies.filter((movie) => {
           if (!isShort) {
             return movie.nameRU.toLowerCase().includes(textInSearchInput.toLowerCase());
@@ -28,17 +41,24 @@ function SavedMovies({ getSavedMovies, savedMovies, deleteMovie }) {
           return movie.nameRU.toLowerCase().includes(textInSearchInput.toLowerCase()) && movie.duration > 40;
         })
       );
+      localStorage.setItem('textInSearchInputSavedMovies', textInSearchInput);
+      localStorage.setItem('isShortSavedMovies', isShort);
+    } else if (textInSearchInput !== '' && savedMovies[0] === false) {
+      setIsErrVisible(true);
+      setErrMessage(errors.serverIsEmpty);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [savedMovies, textInSearchInput, isShort]);
 
   useEffect(() => {
-    if (!filteredMovies.length && textInSearchInput.length) {
+    if (!filteredSavedMovies.length && textInSearchInput.length) {
       setIsErrVisible(true);
       setErrMessage(errors.notFound);
     } else {
       setIsErrVisible(false);
     }
-  }, [filteredMovies]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filteredSavedMovies]);
 
   function changeMoviesDurationCheckBox() {
     setIsShort(!isShort);
@@ -52,8 +72,9 @@ function SavedMovies({ getSavedMovies, savedMovies, deleteMovie }) {
         isMoviesDurationCheckBoxEnable={isShort}
         textInSearchInput={textInSearchInput}
       />
-      {isErrVisible && <ErrMovies text={errMessage} />}
-      <MoviesCardList movies={filteredMovies} positionSavedMovies={true} deleteMovie={deleteMovie} />
+      {isPreloaderVisible && <Preloader />}
+      {!isPreloaderVisible && isErrVisible && <ErrMovies text={errMessage} />}
+      <MoviesCardList movies={filteredSavedMovies} positionSavedMovies={true} deleteMovie={deleteMovie} />
     </main>
   );
 }

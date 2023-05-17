@@ -7,7 +7,17 @@ import ErrMovies from '../ErrMovies/ErrMovies';
 
 import { errors } from '../../utils/constants.js';
 
-function Movies({ saveMovie, deleteMovie, getSavedMovies, savedMovies, getInitialMovies, allMovies, isPreloaderVisible }) {
+function Movies({
+  saveMovie,
+  deleteMovie,
+  getSavedMovies,
+  savedMovies,
+  getItemSavedMovies,
+  getInitialMovies,
+  allMovies,
+  getItemAllMovies,
+  isPreloaderVisible,
+}) {
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [textInSearchInput, setTextInSearchInput] = useState('');
   const [isShort, setIsShort] = useState(false);
@@ -16,29 +26,30 @@ function Movies({ saveMovie, deleteMovie, getSavedMovies, savedMovies, getInitia
   const [isBtnMoreVisible, setIsBtnMoreVisible] = useState(false);
   const [isErrVisible, setIsErrVisible] = useState(false);
   const [errMessage, setErrMessage] = useState('');
-
   // Hooks:
   useEffect(() => {
-    // getSavedMovies();
-    if (JSON.parse(localStorage.getItem('filteredMovies')) !== null) {
-      //проверяем есть ли в локальном хранилище предыдущие данные
-      // setIsShort(JSON.parse(localStorage.getItem('isShort')));
-      // setTextInSearchInput(localStorage.getItem('textInSearchInput'));
-      // setFilteredMovies(JSON.parse(localStorage.getItem('filteredMovies')));
+    //проверяем есть ли в локальном хранилище предыдущие данные
+    if (JSON.parse(localStorage.getItem('movies')) !== null) {
+      getItemAllMovies();
+    }
+    if (JSON.parse(localStorage.getItem('isShort')) !== null) {
+      setIsShort(JSON.parse(localStorage.getItem('isShort')));
+      setTextInSearchInput(localStorage.getItem('textInSearchInput'));
+    }
+    if (JSON.parse(localStorage.getItem('savedMovies')) !== null) {
+      getItemSavedMovies();
     }
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', handleResizeDebaunced);
 
     return () => {
-      // window.removeEventListener('resize', handleResize);
-      window.addEventListener('resize', handleResize);
+      window.addEventListener('resize', handleResizeDebaunced);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (textInSearchInput !== '') {
-      // если фильмы хранятся в Localstorage, то больше их не загружаем
       if (!allMovies.length) {
         getInitialMovies();
       }
@@ -54,29 +65,31 @@ function Movies({ saveMovie, deleteMovie, getSavedMovies, savedMovies, getInitia
           return movie.nameRU.toLowerCase().includes(textInSearchInput.toLowerCase()) && movie.duration > 40;
         })
       );
-      // localStorage.setItem('textInSearchInput', textInSearchInput);
-      // localStorage.setItem('isShort', isShort);
-      // localStorage.setItem('filteredMovies', JSON.stringify(filteredMovies));
+      localStorage.setItem('textInSearchInput', textInSearchInput);
+      localStorage.setItem('isShort', isShort);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allMovies, textInSearchInput, isShort]);
 
   const moviesToRender = useMemo(() => {
     const countToRender = screenWidth < 768 ? 5 : screenWidth < 1280 ? 8 : 12;
-
-    if (countToRender * page < filteredMovies.length) {
-      setIsBtnMoreVisible(true);
-    } else {
-      setIsBtnMoreVisible(false);
-    }
-
-    if (!filteredMovies.length && textInSearchInput.length) {
-      setIsErrVisible(true);
-      setErrMessage(errors.notFound);
-    } else {
+    if (allMovies.length) {
+      // защита от пустых перерендоров
       setIsErrVisible(false);
-    }
+      if (countToRender * page < filteredMovies.length) {
+        setIsBtnMoreVisible(true);
+      } else {
+        setIsBtnMoreVisible(false);
+      }
 
+      if (!filteredMovies.length && textInSearchInput.length) {
+        setIsErrVisible(true);
+        setErrMessage(errors.notFound);
+      }
+    }
     return filteredMovies.slice(0, countToRender * page);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filteredMovies, page, screenWidth]);
 
   //function
@@ -88,9 +101,24 @@ function Movies({ saveMovie, deleteMovie, getSavedMovies, savedMovies, getInitia
     setIsShort(!isShort);
   }
 
+  function debounce(fn, ms) {
+    let timeout;
+
+    return function () {
+      const fnCall = () => {
+        fn.apply(this, arguments);
+      };
+
+      clearTimeout(timeout);
+      timeout = setTimeout(fnCall, ms);
+    };
+  }
+
   const handleResize = useCallback(() => {
     setScreenWidth(window.innerWidth);
   }, []);
+
+  const handleResizeDebaunced = debounce(handleResize, 300);
 
   return (
     <main>
@@ -101,7 +129,7 @@ function Movies({ saveMovie, deleteMovie, getSavedMovies, savedMovies, getInitia
         textInSearchInput={textInSearchInput}
       />
       {isPreloaderVisible && <Preloader />}
-      {!isPreloaderVisible && isErrVisible && <ErrMovies text={errMessage} />}
+      {/* {!isPreloaderVisible && isErrVisible && <ErrMovies text={errMessage} />} */}
       <MoviesCardList
         movies={moviesToRender}
         savedMovies={savedMovies}

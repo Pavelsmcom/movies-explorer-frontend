@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { useFormWithValidation } from '../../utils/hooks/useFormWithValidation';
 
 import WelcomeMessage from '../WelcomeMessage/WelcomeMessage';
@@ -8,10 +10,13 @@ import AuthLink from '../AuthLink/AuthLink';
 
 function Register({ handleRegister }) {
   const { values, handleChange, onBlur, errors, isValid } = useFormWithValidation();
+  const [isDisabledInput, setIsDisabledInput] = useState(false);
 
   async function handleSubmit(e) {
     e.preventDefault();
-    handleRegister({ name: values['name'], password: values['password'], email: values['email'] });
+    setIsDisabledInput(true);
+    await handleRegister({ name: values['name'], password: values['password'], email: values['email'] });
+    setIsDisabledInput(false);
   }
 
   return (
@@ -22,6 +27,7 @@ function Register({ handleRegister }) {
             <div>
               <WelcomeMessage text="Добро пожаловать!" />
               <Input
+                disabled={isDisabledInput}
                 value={values['name'] || ''}
                 text="Имя"
                 textError={errors.name}
@@ -35,6 +41,7 @@ function Register({ handleRegister }) {
                 pattern="^[A-Za-zА-Яа-яЁё0-9\s\-]*$"
               />
               <Input
+                disabled={isDisabledInput}
                 value={values['email'] || ''}
                 text="E-mail"
                 textError={errors.email}
@@ -45,6 +52,7 @@ function Register({ handleRegister }) {
                 onBlur={onBlur}
               />
               <Input
+                disabled={isDisabledInput}
                 value={values['password'] || ''}
                 text="Пароль"
                 textError={errors.password}
@@ -56,7 +64,7 @@ function Register({ handleRegister }) {
               />
             </div>
             <div>
-              <AuthBtn disabled={!isValid} text="Зарегистрироваться" />
+              <AuthBtn disabled={!isValid || isDisabledInput} text="Зарегистрироваться" />
               <AuthLink text="Уже зарегистрированы?" linkText="Войти" link="/signin" />
             </div>
           </AuthForm>

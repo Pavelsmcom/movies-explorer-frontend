@@ -7,10 +7,11 @@ function MoviesCard({ movie, positionSavedMovies, saveMovie, deleteMovie, isSave
 
   function handleSaveMovie() {
     try {
-      saveMovie(movie);
+      saveMovie(movie); // saveMovie приходит от родительского компонента и там имеет try-catch
       setIsSavedMovie(true);
     } catch (error) {
-      console.log();
+      // сработает этот catch? todo 1705
+      setIsSavedMovie(false);
     }
   }
 
@@ -23,7 +24,7 @@ function MoviesCard({ movie, positionSavedMovies, saveMovie, deleteMovie, isSave
     minutes = Number(minutes);
     return Math.floor(minutes / 60) + 'ч ' + (minutes % 60) + 'м';
   }
-  // todo посмотреть и вынести функцию перерасчета, чтобы она вызывалась 1 раз
+  // todo посмотреть и вынести функцию перерасчета, чтобы она вызывалась 1 раз todo 1705
   return (
     <article className="movies-card">
       <a href={trailerLink} target="_blank" rel="noreferrer">
@@ -38,11 +39,11 @@ function MoviesCard({ movie, positionSavedMovies, saveMovie, deleteMovie, isSave
           <img className="movies-card__saved-movies-btn-pic" src={Close} alt="Иконка закрытия" />
         </button>
       ) : isSavedMovie ? (
-        <button className="movies-card__save-btn movies-card__save-btn_active" type="button" aria-label="Кнопка сохранения" onClick={handleDeleteMovie}>
+        <button className="movies-card__save-btn movies-card__save-btn_active" type="button" aria-label="Кнопка сохранено" onClick={handleDeleteMovie}>
           &#10003;
         </button>
       ) : (
-        <button className="movies-card__save-btn" type="button" aria-label="Кнопка сохранения" onClick={handleSaveMovie}>
+        <button className="movies-card__save-btn" type="button" aria-label="Кнопка сохранить" onClick={handleSaveMovie}>
           Сохранить
         </button>
       )}

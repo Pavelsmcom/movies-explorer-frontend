@@ -25,8 +25,8 @@ function App() {
   const [serverResponseStatus, setServerResponseStatus] = useState({ status: true, text: '' });
   const [currentUser, setCurrentUser] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false); // для управления защищёнными роутами
-  const [allMovies, setAllMovies] = useState([]);
-  const [savedMovies, setSavedMovies] = useState([]);
+  const [allMovies, setAllMovies] = useState(JSON.parse(localStorage.getItem('movies')) || []);
+  const [savedMovies, setSavedMovies] = useState(JSON.parse(localStorage.getItem('savedMovies')) || []);
   const [isPreloaderVisible, setIsPreloaderVisible] = useState(false);
 
   const navigate = useNavigate();
@@ -42,6 +42,7 @@ function App() {
           setCurrentUser((user) => ({ ...user, name: name, email: email, _id: _id }));
           setLoggedIn(true);
         } catch (error) {
+          // eslint-disable-next-line eqeqeq
           if (error == 'Error: getUserInfo:401') {
             setServerResponseStatus({ status: false, text: errors.loginTokenIncorrect });
           } else {
@@ -52,6 +53,14 @@ function App() {
       }
     })();
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
+  }, [savedMovies]);
+
+  useEffect(() => {
+    localStorage.setItem('movies', JSON.stringify(allMovies));
+  }, [allMovies]);
 
   //functions:
   async function handleLogin(user) {
@@ -66,8 +75,10 @@ function App() {
         navigate('/movies', { replace: true });
       }
     } catch (error) {
+      // eslint-disable-next-line eqeqeq
       if (error == 'Error: login:401') {
         setServerResponseStatus({ status: false, text: errors.loginError });
+        // eslint-disable-next-line eqeqeq
       } else if (error == 'Error: getUserInfo:401') {
         setServerResponseStatus({ status: false, text: errors.loginTokenIncorrect });
       } else {
@@ -90,8 +101,10 @@ function App() {
         navigate('/movies', { replace: true });
       }
     } catch (error) {
+      // eslint-disable-next-line eqeqeq
       if (error == 'Error: register:409') {
         setServerResponseStatus({ status: false, text: errors.registerEmail });
+        // eslint-disable-next-line eqeqeq
       } else if (error == 'Error: getUserInfo:400') {
         setServerResponseStatus({ status: false, text: errors.registerError });
       } else {
@@ -109,8 +122,10 @@ function App() {
       setServerResponseStatus({ status: true, text: errors.loginSuccess });
       setIsPopupOpen(true);
     } catch (error) {
+      // eslint-disable-next-line eqeqeq
       if (error == 'Error: updateUser:409') {
         setServerResponseStatus({ status: false, text: errors.profileEmail });
+        // eslint-disable-next-line eqeqeq
       } else if (error == 'Error: updateUser:404') {
         setServerResponseStatus({ status: false, text: errors.profileError });
       } else {
@@ -122,7 +137,15 @@ function App() {
 
   function handleLogout() {
     localStorage.removeItem('jwt');
-    //1605 добавить удаление фильмов при выходе из локалсторадж ???
+
+    localStorage.removeItem('isShort');
+    localStorage.removeItem('textInSearchInput');
+    localStorage.removeItem('movies');
+
+    localStorage.removeItem('isShortSavedMovies');
+    localStorage.removeItem('textInSearchInputSavedMovies');
+    localStorage.removeItem('savedMovies');
+
     setLoggedIn(false);
     navigate('/', { replace: true });
   }
@@ -137,7 +160,12 @@ function App() {
       setServerResponseStatus({ status: false, text: errors.loadingMovies });
       setIsPopupOpen(true);
     } finally {
-      setIsPreloaderVisible(false);
+      console.log('data1');
+      setTimeout(() => {
+        setIsPreloaderVisible(false);
+        console.log('data2');
+      }, 2000);
+      // setIsPreloaderVisible(false);
     }
   }
 
@@ -145,21 +173,31 @@ function App() {
     try {
       setIsPreloaderVisible(true);
       const movies = await mainApi.getSavedMovie();
-      setSavedMovies(...savedMovies, movies);
+      if (!movies.length) {
+        setSavedMovies([false]);
+        localStorage.setItem('savedMovies', JSON.stringify([false]));
+      } else {
+        // setSavedMovies(...savedMovies, movies);
+        setSavedMovies(movies);
+      }
     } catch (error) {
       setIsPreloaderVisible(false);
       setServerResponseStatus({ status: false, text: errors.loadingMovies });
       setIsPopupOpen(true);
     } finally {
-      setIsPreloaderVisible(false);
+      // setIsPreloaderVisible(false);
     }
   }
 
-  //--------------------------------------------------
   async function handleSaveMovie(movie) {
     try {
       const data = await mainApi.addMovie(movie);
-      setSavedMovies([...savedMovies, data]);
+      if (savedMovies[0] === false) {
+        setSavedMovies([data]);
+      } else {
+        setSavedMovies([...savedMovies, data]);
+      }
+      // const moviesData = [...savedMovies, data];
     } catch (error) {
       setServerResponseStatus({ status: false, text: errors.loadingMovies });
       setIsPopupOpen(true);
@@ -168,8 +206,17 @@ function App() {
 
   async function handleDeleteMovie(movie) {
     try {
-      await mainApi.deleteMovie(movie._id);
-      removeMovieFromPage(movie._id);
+      if (movie._id) {
+        await mainApi.deleteMovie(movie._id);
+        removeMovieFromPage(movie._id);
+        setSavedMovies((prevState) => prevState.filter((m) => m._id !== movie._id));
+      } else if (movie.id) {
+        const deletedMovie = savedMovies.find((item) => item.movieId === movie.id);
+        await mainApi.deleteMovie(deletedMovie._id);
+        removeMovieFromPage(deletedMovie._id);
+        setSavedMovies((prevState) => prevState.filter((m) => m._id !== deletedMovie._id));
+      }
+      localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
     } catch (error) {
       setServerResponseStatus({ status: false, text: errors.loadingMovies });
       setIsPopupOpen(true);
@@ -180,10 +227,18 @@ function App() {
     setSavedMovies((prevState) => prevState.filter((m) => m._id !== movieId));
   }
 
+  function getItemAllMovies() {
+    setAllMovies(JSON.parse(localStorage.getItem('movies')));
+  }
+
+  function getItemSavedMovies() {
+    setSavedMovies(JSON.parse(localStorage.getItem('savedMovies')));
+  }
+
   return (
     <div className="page">
+      <Header isBurgerMenuOpen={isBurgerMenuOpen} onBurgerMenuClick={() => setIsBurgerMenuOpen(true)} loggedIn={loggedIn} />
       <CurrentUserContext.Provider value={currentUser}>
-        <Header isBurgerMenuOpen={isBurgerMenuOpen} onBurgerMenuClick={() => setIsBurgerMenuOpen(true)} loggedIn={loggedIn} />
         <Routes>
           <Route
             path="/movies"
@@ -191,11 +246,13 @@ function App() {
               <ProtectedRouteElement loggedIn={loggedIn}>
                 <Movies
                   getInitialMovies={handleGetInitialMovies}
-                  allMovies={allMovies}
                   saveMovie={handleSaveMovie}
                   deleteMovie={handleDeleteMovie}
                   getSavedMovies={handleGetSavedMovies}
+                  allMovies={allMovies}
+                  getItemAllMovies={getItemAllMovies}
                   savedMovies={savedMovies}
+                  getItemSavedMovies={getItemSavedMovies}
                   isPreloaderVisible={isPreloaderVisible}
                 />
               </ProtectedRouteElement>
@@ -205,7 +262,13 @@ function App() {
             path="/saved-movies"
             element={
               <ProtectedRouteElement loggedIn={loggedIn}>
-                <SavedMovies getSavedMovies={handleGetSavedMovies} savedMovies={savedMovies} deleteMovie={handleDeleteMovie} />
+                <SavedMovies
+                  getSavedMovies={handleGetSavedMovies}
+                  deleteMovie={handleDeleteMovie}
+                  savedMovies={savedMovies}
+                  getItemSavedMovies={getItemSavedMovies}
+                  isPreloaderVisible={isPreloaderVisible}
+                />
               </ProtectedRouteElement>
             }
           />
@@ -222,20 +285,35 @@ function App() {
           <Route path="/signin" element={<Login handleLogin={handleLogin} />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
-        <Footer />
-        <BurgerMenu isOpen={isBurgerMenuOpen} onClose={() => setIsBurgerMenuOpen(false)} />
-        <InfoTooltip isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} serverResponseStatus={serverResponseStatus} />
       </CurrentUserContext.Provider>
+      <Footer />
+      <BurgerMenu isOpen={isBurgerMenuOpen} onClose={() => setIsBurgerMenuOpen(false)} />
+      <InfoTooltip isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} serverResponseStatus={serverResponseStatus} />
     </div>
   );
 }
 
 export default App;
 
-//todo ошибки разные обработать и выводить свои сообщения
-// todo сохранение и выгрузка из локасторадж фильмов и сохранённых фильмов
-// todo стейт сохранённых фильмов сразу не меняется если перейти со страницы movie на страницу saved movies ??? Поправил может быть стало лучше
-//todo разобраться с дебаунсом debaunce on resize
-// прелоадер добавить + при первом поиске фильмов есть сообщение "Не найдено!"
-// после удаления всех картчоек появляется сообщение Неправильный запрос? БЫЛО НЕ ПУСТОЕ ПОЛЕ ЗАПРОСА
-// потом ещё еррор от сервера прилетел?
+// +- проверить сохранение и выгрузка из локасторадж фильмов и сохранённых фильмов
+// + todo проверить блокировку всех полей при отправке (не делал блокировку на поиск)
+// + проверить удаление всех данных при логауте
+// + стейт сохранённых фильмов сразу не меняется если перейти со страницы movie на страницу saved movies ??? Проверить???
+// + todo проверить дебаунс
+// + после удаления всех картчоек появляется сообщение Неправильный запрос? БЫЛО НЕ ПУСТОЕ ПОЛЕ ЗАПРОСА потом ещё еррор от сервера прилетел?
+
+// todo НЕ РАБОТАЕТ ПОДУМАТЬ прелоадер добавить + при первом поиске фильмов есть сообщение "Не найдено!" поискать и проверить на баги
+//  ВОзникает прелоадер, потом возникает сообщение об ошибкке, потом только карточки
+
+// todo добавил прелоадер на сохранённые фильмы - првоерить работоспособность
+
+// todo проэкспериментировать сделать в movies useEffect ассинхронным чтобы понять, чтобы 2 раза не рендорился на allMovies и задать вопрос.
+// Карточки красить на сонове стейта - const liked = saveMovies.some((m) => m.movieId === movie.id)
+
+// todo ошибки разные обработать и выводить свои сообщения (попробую сдать так)
+// todo рекомендуют для фильтрации и поиска по фильмам сделать отдельынй компонент
+
+// todo посмотреть и вынести функцию перерасчета, чтобы она вызывалась 1 раз v CardMobies
+// 1705 И 1605 погуглить
+
+//todo почистить все консоль логи!!!!!
