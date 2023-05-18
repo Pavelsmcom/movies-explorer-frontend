@@ -7,3 +7,9 @@ https://www.figma.com/file/HXalk39BOa53PSbwp0Pb3F/My-Diploma_1?type=design&t=VEU
 ## Дизайн архивом:
 
 https://pavelsm.com/figma/diplom.fig
+
+## Ссылка на Pull request
+
+## Ссылка на сайт
+
+https://movies-explorer.pavelsm.nomoredomains.monster

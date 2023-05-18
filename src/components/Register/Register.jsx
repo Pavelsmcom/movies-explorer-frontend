@@ -15,6 +15,7 @@ function Register({ handleRegister }) {
   async function handleSubmit(e) {
     e.preventDefault();
     setIsDisabledInput(true);
+    // Блокирую поля формы на время отправки запроса, для этого асинхронная функция
     await handleRegister({ name: values['name'], password: values['password'], email: values['email'] });
     setIsDisabledInput(false);
   }

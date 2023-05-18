@@ -15,8 +15,8 @@ import InfoTooltip from '../InfoTooltip/InfoTooltip';
 import ProtectedRouteElement from '../ProtectedRoute/ProtectedRoute';
 
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import { mainApi } from '../../utils/MainApi.js';
-import { moviesApi } from '../../utils/MoviesApi.js';
+import { mainApi } from '../../utils/Api/MainApi.js';
+import { moviesApi } from '../../utils/Api/MoviesApi.js';
 import { errors } from '../../utils/constants.js';
 
 function App() {
@@ -27,7 +27,8 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false); // для управления защищёнными роутами
   const [allMovies, setAllMovies] = useState(JSON.parse(localStorage.getItem('movies')) || []);
   const [savedMovies, setSavedMovies] = useState(JSON.parse(localStorage.getItem('savedMovies')) || []);
-  const [isPreloaderVisible, setIsPreloaderVisible] = useState(false);
+  const [isPreloaderMoviesVisible, setIsPreloaderMoviesVisible] = useState(false);
+  const [isPreloaderSavedMoviesVisible, setIsPreloaderSavedMoviesVisible] = useState(false);
 
   const navigate = useNavigate();
 
@@ -152,40 +153,34 @@ function App() {
 
   async function handleGetInitialMovies() {
     try {
-      setIsPreloaderVisible(true);
+      setIsPreloaderMoviesVisible(true);
       const movies = await moviesApi.getInitialMovies();
       setAllMovies(movies);
     } catch (error) {
-      setIsPreloaderVisible(false);
+      setIsPreloaderMoviesVisible(false);
       setServerResponseStatus({ status: false, text: errors.loadingMovies });
       setIsPopupOpen(true);
     } finally {
-      console.log('data1');
-      setTimeout(() => {
-        setIsPreloaderVisible(false);
-        console.log('data2');
-      }, 2000);
-      // setIsPreloaderVisible(false);
+      setIsPreloaderMoviesVisible(false);
     }
   }
 
   async function handleGetSavedMovies() {
     try {
-      setIsPreloaderVisible(true);
+      setIsPreloaderSavedMoviesVisible(true);
       const movies = await mainApi.getSavedMovie();
       if (!movies.length) {
         setSavedMovies([false]);
         localStorage.setItem('savedMovies', JSON.stringify([false]));
       } else {
-        // setSavedMovies(...savedMovies, movies);
         setSavedMovies(movies);
       }
     } catch (error) {
-      setIsPreloaderVisible(false);
+      setIsPreloaderSavedMoviesVisible(false);
       setServerResponseStatus({ status: false, text: errors.loadingMovies });
       setIsPopupOpen(true);
     } finally {
-      // setIsPreloaderVisible(false);
+      setIsPreloaderSavedMoviesVisible(false);
     }
   }
 
@@ -197,7 +192,6 @@ function App() {
       } else {
         setSavedMovies([...savedMovies, data]);
       }
-      // const moviesData = [...savedMovies, data];
     } catch (error) {
       setServerResponseStatus({ status: false, text: errors.loadingMovies });
       setIsPopupOpen(true);
@@ -206,6 +200,7 @@ function App() {
 
   async function handleDeleteMovie(movie) {
     try {
+      // из-за того, что фильмы хранятся в разных массивах и клик по иконке удаления возвращает объект с разными полями
       if (movie._id) {
         await mainApi.deleteMovie(movie._id);
         removeMovieFromPage(movie._id);
@@ -216,6 +211,7 @@ function App() {
         removeMovieFromPage(deletedMovie._id);
         setSavedMovies((prevState) => prevState.filter((m) => m._id !== deletedMovie._id));
       }
+
       localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
     } catch (error) {
       setServerResponseStatus({ status: false, text: errors.loadingMovies });
@@ -253,7 +249,8 @@ function App() {
                   getItemAllMovies={getItemAllMovies}
                   savedMovies={savedMovies}
                   getItemSavedMovies={getItemSavedMovies}
-                  isPreloaderVisible={isPreloaderVisible}
+                  isPreloaderMoviesVisible={isPreloaderMoviesVisible}
+                  isPreloaderSavedMoviesVisible={isPreloaderSavedMoviesVisible}
                 />
               </ProtectedRouteElement>
             }
@@ -267,7 +264,7 @@ function App() {
                   deleteMovie={handleDeleteMovie}
                   savedMovies={savedMovies}
                   getItemSavedMovies={getItemSavedMovies}
-                  isPreloaderVisible={isPreloaderVisible}
+                  isPreloaderSavedMoviesVisible={isPreloaderSavedMoviesVisible}
                 />
               </ProtectedRouteElement>
             }
@@ -294,26 +291,3 @@ function App() {
 }
 
 export default App;
-
-// +- проверить сохранение и выгрузка из локасторадж фильмов и сохранённых фильмов
-// + todo проверить блокировку всех полей при отправке (не делал блокировку на поиск)
-// + проверить удаление всех данных при логауте
-// + стейт сохранённых фильмов сразу не меняется если перейти со страницы movie на страницу saved movies ??? Проверить???
-// + todo проверить дебаунс
-// + после удаления всех картчоек появляется сообщение Неправильный запрос? БЫЛО НЕ ПУСТОЕ ПОЛЕ ЗАПРОСА потом ещё еррор от сервера прилетел?
-
-// todo НЕ РАБОТАЕТ ПОДУМАТЬ прелоадер добавить + при первом поиске фильмов есть сообщение "Не найдено!" поискать и проверить на баги
-//  ВОзникает прелоадер, потом возникает сообщение об ошибкке, потом только карточки
-
-// todo добавил прелоадер на сохранённые фильмы - првоерить работоспособность
-
-// todo проэкспериментировать сделать в movies useEffect ассинхронным чтобы понять, чтобы 2 раза не рендорился на allMovies и задать вопрос.
-// Карточки красить на сонове стейта - const liked = saveMovies.some((m) => m.movieId === movie.id)
-
-// todo ошибки разные обработать и выводить свои сообщения (попробую сдать так)
-// todo рекомендуют для фильтрации и поиска по фильмам сделать отдельынй компонент
-
-// todo посмотреть и вынести функцию перерасчета, чтобы она вызывалась 1 раз v CardMobies
-// 1705 И 1605 погуглить
-
-//todo почистить все консоль логи!!!!!

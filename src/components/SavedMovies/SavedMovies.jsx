@@ -5,8 +5,9 @@ import ErrMovies from '../ErrMovies/ErrMovies';
 import Preloader from '../Preloader/Preloader';
 
 import { errors } from '../../utils/constants.js';
+import filterMovies from '../../utils/functions/filterMovies';
 
-function SavedMovies({ getSavedMovies, savedMovies, deleteMovie, isPreloaderVisible, getItemSavedMovies }) {
+function SavedMovies({ getSavedMovies, savedMovies, deleteMovie, getItemSavedMovies, isPreloaderSavedMoviesVisible }) {
   const [filteredSavedMovies, setFilteredSavedMovies] = useState([]);
   const [textInSearchInput, setTextInSearchInput] = useState('');
   const [isShort, setIsShort] = useState(false);
@@ -19,7 +20,6 @@ function SavedMovies({ getSavedMovies, savedMovies, deleteMovie, isPreloaderVisi
     if (JSON.parse(localStorage.getItem('savedMovies')) !== null) {
       getItemSavedMovies();
     }
-
     if (JSON.parse(localStorage.getItem('isShortSavedMovies')) !== null) {
       setIsShort(JSON.parse(localStorage.getItem('isShortSavedMovies')));
       setTextInSearchInput(localStorage.getItem('textInSearchInputSavedMovies'));
@@ -33,14 +33,9 @@ function SavedMovies({ getSavedMovies, savedMovies, deleteMovie, isPreloaderVisi
       if (!savedMovies.length) {
         getSavedMovies();
       }
-      setFilteredSavedMovies(
-        savedMovies.filter((movie) => {
-          if (!isShort) {
-            return movie.nameRU.toLowerCase().includes(textInSearchInput.toLowerCase());
-          }
-          return movie.nameRU.toLowerCase().includes(textInSearchInput.toLowerCase()) && movie.duration > 40;
-        })
-      );
+
+      setFilteredSavedMovies(filterMovies(savedMovies, isShort, textInSearchInput));
+
       localStorage.setItem('textInSearchInputSavedMovies', textInSearchInput);
       localStorage.setItem('isShortSavedMovies', isShort);
     } else if (textInSearchInput !== '' && savedMovies[0] === false) {
@@ -72,8 +67,11 @@ function SavedMovies({ getSavedMovies, savedMovies, deleteMovie, isPreloaderVisi
         isMoviesDurationCheckBoxEnable={isShort}
         textInSearchInput={textInSearchInput}
       />
-      {isPreloaderVisible && <Preloader />}
-      {!isPreloaderVisible && isErrVisible && <ErrMovies text={errMessage} />}
+      {/* {isPreloaderVisible && <Preloader />}
+      {!isPreloaderVisible && isErrVisible && <ErrMovies text={errMessage} />} */}
+      {/* 2 флага нужно, т.к. идут 2 запроса к разным серверам и чтобы прелоадер показывался, пока последний запрос не выполнится */}
+      {isPreloaderSavedMoviesVisible && <Preloader />}
+      {!isPreloaderSavedMoviesVisible && isErrVisible && <ErrMovies text={errMessage} />}
       <MoviesCardList movies={filteredSavedMovies} positionSavedMovies={true} deleteMovie={deleteMovie} />
     </main>
   );

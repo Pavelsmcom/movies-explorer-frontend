@@ -1,27 +1,24 @@
+import { useMemo } from 'react';
 import MoviesBtn from '../MoviesBtn/MoviesBtn';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
 function MoviesCardList({ positionSavedMovies, movies, savedMovies, isBtnMoreVisible, btnMoreClick, saveMovie, deleteMovie }) {
-  const moviesElements = movies.map((movie) => {
-    // проверяем был ли фильм сохранён
-    let isSavedMovie = false;
+  const moviesElements = useMemo(() => {
+    return movies.map((movie) => {
+      let isSavedMovie = false;
 
-    if (savedMovies !== undefined && savedMovies.find((item) => item.movieId === movie.id) !== undefined) {
-      isSavedMovie = true;
-    }
+      if (savedMovies !== undefined && savedMovies.find((item) => item.movieId === movie.id) !== undefined) {
+        isSavedMovie = true;
+      }
 
-    return (
-      <li key={movie.id || movie._id}>
-        <MoviesCard
-          movie={movie}
-          positionSavedMovies={positionSavedMovies}
-          isSavedMovieInitial={isSavedMovie}
-          saveMovie={saveMovie}
-          deleteMovie={deleteMovie}
-        />
-      </li>
-    );
-  });
+      return (
+        <li key={movie.id || movie._id}>
+          <MoviesCard movie={movie} positionSavedMovies={positionSavedMovies} isSavedMovie={isSavedMovie} saveMovie={saveMovie} deleteMovie={deleteMovie} />
+        </li>
+      );
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [movies, savedMovies]);
 
   return (
     <section className="movies-card-list" aria-label="Секция с фильмами">

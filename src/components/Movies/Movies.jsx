@@ -6,6 +6,9 @@ import SearchForm from '../SearchForm/SearchForm';
 import ErrMovies from '../ErrMovies/ErrMovies';
 
 import { errors } from '../../utils/constants.js';
+import filterMovies from '../../utils/functions/filterMovies';
+import debounce from '../../utils/functions/debounce';
+// import { usePageWidth } from '../../utils/hooks/usePageWidth';
 
 function Movies({
   saveMovie,
@@ -16,7 +19,8 @@ function Movies({
   getInitialMovies,
   allMovies,
   getItemAllMovies,
-  isPreloaderVisible,
+  isPreloaderMoviesVisible,
+  isPreloaderSavedMoviesVisible,
 }) {
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [textInSearchInput, setTextInSearchInput] = useState('');
@@ -26,6 +30,8 @@ function Movies({
   const [isBtnMoreVisible, setIsBtnMoreVisible] = useState(false);
   const [isErrVisible, setIsErrVisible] = useState(false);
   const [errMessage, setErrMessage] = useState('');
+  // const { screenWidth } = usePageWidth();
+
   // Hooks:
   useEffect(() => {
     //проверяем есть ли в локальном хранилище предыдущие данные
@@ -57,14 +63,8 @@ function Movies({
         getSavedMovies();
       }
 
-      setFilteredMovies(
-        allMovies.filter((movie) => {
-          if (!isShort) {
-            return movie.nameRU.toLowerCase().includes(textInSearchInput.toLowerCase());
-          }
-          return movie.nameRU.toLowerCase().includes(textInSearchInput.toLowerCase()) && movie.duration > 40;
-        })
-      );
+      setFilteredMovies(filterMovies(allMovies, isShort, textInSearchInput));
+
       localStorage.setItem('textInSearchInput', textInSearchInput);
       localStorage.setItem('isShort', isShort);
     }
@@ -101,19 +101,6 @@ function Movies({
     setIsShort(!isShort);
   }
 
-  function debounce(fn, ms) {
-    let timeout;
-
-    return function () {
-      const fnCall = () => {
-        fn.apply(this, arguments);
-      };
-
-      clearTimeout(timeout);
-      timeout = setTimeout(fnCall, ms);
-    };
-  }
-
   const handleResize = useCallback(() => {
     setScreenWidth(window.innerWidth);
   }, []);
@@ -128,8 +115,9 @@ function Movies({
         isMoviesDurationCheckBoxEnable={isShort}
         textInSearchInput={textInSearchInput}
       />
-      {isPreloaderVisible && <Preloader />}
-      {/* {!isPreloaderVisible && isErrVisible && <ErrMovies text={errMessage} />} */}
+      {/* 2 флага нужно, т.к. идут 2 запроса к разным серверам и чтобы прелоадер показывался, пока последний запрос не выполнится */}
+      {(isPreloaderSavedMoviesVisible || isPreloaderMoviesVisible) && <Preloader />}
+      {!(isPreloaderSavedMoviesVisible || isPreloaderMoviesVisible) && isErrVisible && <ErrMovies text={errMessage} />}
       <MoviesCardList
         movies={moviesToRender}
         savedMovies={savedMovies}
