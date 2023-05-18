@@ -67,8 +67,6 @@ function SavedMovies({ getSavedMovies, savedMovies, deleteMovie, getItemSavedMov
         isMoviesDurationCheckBoxEnable={isShort}
         textInSearchInput={textInSearchInput}
       />
-      {/* {isPreloaderVisible && <Preloader />}
-      {!isPreloaderVisible && isErrVisible && <ErrMovies text={errMessage} />} */}
       {/* 2 флага нужно, т.к. идут 2 запроса к разным серверам и чтобы прелоадер показывался, пока последний запрос не выполнится */}
       {isPreloaderSavedMoviesVisible && <Preloader />}
       {!isPreloaderSavedMoviesVisible && isErrVisible && <ErrMovies text={errMessage} />}
