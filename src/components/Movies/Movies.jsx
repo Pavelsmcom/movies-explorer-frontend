@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
@@ -7,8 +7,7 @@ import ErrMovies from '../ErrMovies/ErrMovies';
 
 import { errors } from '../../utils/constants.js';
 import filterMovies from '../../utils/functions/filterMovies';
-import debounce from '../../utils/functions/debounce';
-// import { usePageWidth } from '../../utils/hooks/usePageWidth';
+import { usePageWidth } from '../../utils/hooks/usePageWidth';
 
 function Movies({
   saveMovie,
@@ -25,12 +24,11 @@ function Movies({
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [textInSearchInput, setTextInSearchInput] = useState('');
   const [isShort, setIsShort] = useState(false);
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [page, setPage] = useState(1);
   const [isBtnMoreVisible, setIsBtnMoreVisible] = useState(false);
   const [isErrVisible, setIsErrVisible] = useState(false);
   const [errMessage, setErrMessage] = useState('');
-  // const { screenWidth } = usePageWidth();
+  const { screenWidth } = usePageWidth(300);
 
   // Hooks:
   useEffect(() => {
@@ -46,11 +44,6 @@ function Movies({
       getItemSavedMovies();
     }
 
-    window.addEventListener('resize', handleResizeDebaunced);
-
-    return () => {
-      window.addEventListener('resize', handleResizeDebaunced);
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -100,12 +93,6 @@ function Movies({
   function changeMoviesDurationCheckBox() {
     setIsShort(!isShort);
   }
-
-  const handleResize = useCallback(() => {
-    setScreenWidth(window.innerWidth);
-  }, []);
-
-  const handleResizeDebaunced = debounce(handleResize, 300);
 
   return (
     <main>
