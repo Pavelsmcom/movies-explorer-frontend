@@ -10,6 +10,8 @@ https://pavelsm.com/figma/diplom.fig
 
 ## Ссылка на Pull request
 
+https://github.com/Pavelsmcom/movies-explorer-frontend/pull/2
+
 ## Ссылка на сайт:
 
 https://movies-explorer.pavelsm.nomoredomains.monster
