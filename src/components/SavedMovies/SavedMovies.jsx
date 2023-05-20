@@ -18,6 +18,7 @@ function SavedMovies({ getSavedMovies, savedMovies, deleteMovie, getItemSavedMov
   useEffect(() => {
     //проверяем есть ли в локальном хранилище предыдущие данные
     if (JSON.parse(localStorage.getItem('savedMovies')) !== null) {
+      getItemSavedMovies();
     }
     if (JSON.parse(localStorage.getItem('isShortSavedMovies')) !== null) {
       setIsShort(JSON.parse(localStorage.getItem('isShortSavedMovies')));
