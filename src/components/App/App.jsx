@@ -29,6 +29,7 @@ function App() {
   const [savedMovies, setSavedMovies] = useState(JSON.parse(localStorage.getItem('savedMovies')) || []);
   const [isPreloaderMoviesVisible, setIsPreloaderMoviesVisible] = useState(false);
   const [isPreloaderSavedMoviesVisible, setIsPreloaderSavedMoviesVisible] = useState(false);
+  const [isInit, setIsInit] = useState(false); // Для корректного рендеринга страницы, когда становится понятно авторизирован пользователь или нет
 
   const navigate = useNavigate();
 
@@ -52,6 +53,7 @@ function App() {
           setIsPopupOpen(true);
         }
       }
+      setIsInit(true);
     })();
   }, []);
 
@@ -233,7 +235,7 @@ function App() {
     setSavedMovies(JSON.parse(localStorage.getItem('savedMovies')));
   }
 
-  return (
+  return isInit ? (
     <div className="page">
       <Header isBurgerMenuOpen={isBurgerMenuOpen} onBurgerMenuClick={() => setIsBurgerMenuOpen(true)} loggedIn={loggedIn} />
       <CurrentUserContext.Provider value={currentUser}>
@@ -280,8 +282,22 @@ function App() {
             }
           />
           <Route path="/" element={<Main />} />
-          <Route path="/signup" element={<Register handleRegister={handleRegister} />} />
-          <Route path="/signin" element={<Login handleLogin={handleLogin} />} />
+          <Route
+            path="/signup"
+            element={
+              <ProtectedRouteElement loggedIn={loggedIn} isBlockedForAuthUser={true}>
+                <Register handleRegister={handleRegister} />
+              </ProtectedRouteElement>
+            }
+          />
+          <Route
+            path="/signin"
+            element={
+              <ProtectedRouteElement loggedIn={loggedIn} isBlockedForAuthUser={true}>
+                <Login handleLogin={handleLogin} isBlockedForAuthUser={true} />
+              </ProtectedRouteElement>
+            }
+          />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </CurrentUserContext.Provider>
@@ -289,7 +305,7 @@ function App() {
       <BurgerMenu isOpen={isBurgerMenuOpen} onClose={() => setIsBurgerMenuOpen(false)} />
       <InfoTooltip isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} serverResponseStatus={serverResponseStatus} />
     </div>
-  );
+  ) : null;
 }
 
 export default App;
