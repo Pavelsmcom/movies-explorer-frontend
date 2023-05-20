@@ -147,6 +147,8 @@ function App() {
     localStorage.removeItem('textInSearchInputSavedMovies');
     localStorage.removeItem('savedMovies');
 
+    setSavedMovies([]);
+
     setLoggedIn(false);
     navigate('/', { replace: true });
   }
