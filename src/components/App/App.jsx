@@ -139,15 +139,7 @@ function App() {
   }
 
   function handleLogout() {
-    localStorage.removeItem('jwt');
-
-    localStorage.removeItem('isShort');
-    localStorage.removeItem('textInSearchInput');
-    localStorage.removeItem('movies');
-
-    localStorage.removeItem('isShortSavedMovies');
-    localStorage.removeItem('textInSearchInputSavedMovies');
-    localStorage.removeItem('savedMovies');
+    localStorage.clear();
 
     setSavedMovies([]);
 
