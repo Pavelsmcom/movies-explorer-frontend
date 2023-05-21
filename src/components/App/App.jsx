@@ -144,6 +144,7 @@ function App() {
     setSavedMovies([]);
 
     setLoggedIn(false);
+
     navigate('/', { replace: true });
   }
 

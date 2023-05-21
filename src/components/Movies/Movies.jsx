@@ -24,11 +24,11 @@ function Movies({
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [textInSearchInput, setTextInSearchInput] = useState('');
   const [isShort, setIsShort] = useState(false);
-  const [page, setPage] = useState(1);
   const [isBtnMoreVisible, setIsBtnMoreVisible] = useState(false);
   const [isErrVisible, setIsErrVisible] = useState(false);
   const [errMessage, setErrMessage] = useState('');
   const { screenWidth } = usePageWidth(300);
+  const [deltaCountToRender, setDeltaCountToRender] = useState(0);
 
   // Hooks:
   useEffect(() => {
@@ -66,10 +66,11 @@ function Movies({
 
   const moviesToRender = useMemo(() => {
     const countToRender = screenWidth < 768 ? 5 : screenWidth < 1280 ? 8 : 12;
+
     if (allMovies.length) {
       // защита от пустых перерендоров
       setIsErrVisible(false);
-      if (countToRender * page < filteredMovies.length) {
+      if (countToRender + deltaCountToRender < filteredMovies.length) {
         setIsBtnMoreVisible(true);
       } else {
         setIsBtnMoreVisible(false);
@@ -80,14 +81,17 @@ function Movies({
         setErrMessage(errors.notFound);
       }
     }
-    return filteredMovies.slice(0, countToRender * page);
-
+    return filteredMovies.slice(0, countToRender + deltaCountToRender);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filteredMovies, page, screenWidth]);
+  }, [filteredMovies, deltaCountToRender, screenWidth]);
 
   //function
   function handleMoreClick() {
-    setPage((prev) => prev + 1);
+    if (screenWidth < 1280) {
+      setDeltaCountToRender((prev) => prev + 2);
+    } else {
+      setDeltaCountToRender((prev) => prev + 3);
+    }
   }
 
   function changeMoviesDurationCheckBox() {
