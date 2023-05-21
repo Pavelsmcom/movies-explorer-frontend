@@ -5,7 +5,8 @@ import Preloader from '../Preloader/Preloader';
 import SearchForm from '../SearchForm/SearchForm';
 import ErrMovies from '../ErrMovies/ErrMovies';
 
-import { errors } from '../../utils/constants.js';
+import { errors, moviesRender } from '../../utils/constants.js';
+
 import filterMovies from '../../utils/functions/filterMovies';
 import { usePageWidth } from '../../utils/hooks/usePageWidth';
 
@@ -65,7 +66,12 @@ function Movies({
   }, [allMovies, textInSearchInput, isShort]);
 
   const moviesToRender = useMemo(() => {
-    const countToRender = screenWidth < 768 ? 5 : screenWidth < 1280 ? 8 : 12;
+    const countToRender =
+      screenWidth < moviesRender.middleWidePageResolution
+        ? moviesRender.smallWidePageCountToRender
+        : screenWidth < moviesRender.bigWidePageResolution
+        ? moviesRender.middleWidePageCountToRender
+        : moviesRender.bigWidePageCountToRender;
 
     if (allMovies.length) {
       // защита от пустых перерендоров
@@ -87,10 +93,10 @@ function Movies({
 
   //function
   function handleMoreClick() {
-    if (screenWidth < 1280) {
-      setDeltaCountToRender((prev) => prev + 2);
+    if (screenWidth < moviesRender.bigWidePageResolution) {
+      setDeltaCountToRender((prev) => prev + moviesRender.middleWidePageDeltaCountToRender);
     } else {
-      setDeltaCountToRender((prev) => prev + 3);
+      setDeltaCountToRender((prev) => prev + moviesRender.bigWidePageDeltaCountToRender);
     }
   }
 

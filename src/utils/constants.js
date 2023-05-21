@@ -12,3 +12,16 @@ export const errors = {
   error500: 'На сервере произошла ошибка.',
   error404: 'Страница по указанному маршруту не найдена.',
 };
+
+export const maxMovieDuration = 40;
+
+export const moviesRender = {
+  bigWidePageResolution: 1280,
+  bigWidePageCountToRender: 12,
+  bigWidePageDeltaCountToRender: 3,
+  middleWidePageResolution: 768,
+  middleWidePageCountToRender: 8,
+  middleWidePageDeltaCountToRender: 2,
+  smallWidePageCountToRender: 5,
+  smallWidePageDeltaCountToRender: 2,
+};
