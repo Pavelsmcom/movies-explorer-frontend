@@ -6,7 +6,7 @@ import Navigation from '../Navigation/Navigation';
 import Burger from '../Burger/Burger';
 import AuthMenu from '../AuthMenu/AuthMenu';
 
-function Header({ auth, onBurgerMenuClick, isBurgerMenuOpen }) {
+function Header({ onBurgerMenuClick, isBurgerMenuOpen, loggedIn }) {
   const location = useLocation();
   const [isVisible, setIsVisible] = useState(false);
 
@@ -22,7 +22,7 @@ function Header({ auth, onBurgerMenuClick, isBurgerMenuOpen }) {
     isVisible && (
       <header className="header">
         <Logo />
-        {auth ? (
+        {loggedIn ? (
           <>
             <Navigation />
             <Burger onBurgerMenuClick={onBurgerMenuClick} isBurgerMenuOpen={isBurgerMenuOpen} />

@@ -1,6 +1,6 @@
-function AuthForm({ children }) {
+function AuthForm({ onSubmit, children }) {
   return (
-    <form className="auth-form" noValidate={true}>
+    <form className="auth-form" noValidate={true} onSubmit={onSubmit}>
       {children}
     </form>
   );

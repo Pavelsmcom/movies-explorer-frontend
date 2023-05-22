@@ -1,4 +1,4 @@
-import { useFormWithValidation } from '../../utils/hooks/useFormWithValidation';
+import { useState } from 'react';
 
 import WelcomeMessage from '../WelcomeMessage/WelcomeMessage';
 import AuthForm from '../AuthForm/AuthForm';
@@ -6,18 +6,30 @@ import Input from '../Input/Input';
 import AuthBtn from '../AuthBtn/AuthBtn';
 import AuthLink from '../AuthLink/AuthLink';
 
-function Login() {
+import { useFormWithValidation } from '../../utils/hooks/useFormWithValidation';
+
+function Login({ handleLogin }) {
   const { values, handleChange, onBlur, errors, isValid } = useFormWithValidation();
+  const [isDisabledInput, setIsDisabledInput] = useState(false);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    // Блокирую поля формы на время отправки запроса, для этого асинхронная функция
+    setIsDisabledInput(true);
+    await handleLogin({ password: values['password'], email: values['email'] });
+    setIsDisabledInput(false);
+  }
 
   return (
     <main>
       <section className="login">
         <div className="login-container">
-          <AuthForm>
+          <AuthForm onSubmit={handleSubmit}>
             <div>
               <WelcomeMessage text="Рады видеть!" />
               <Input
-                value={values.name}
+                disabled={isDisabledInput}
+                value={values['email'] || ''}
                 text="E-mail"
                 textError={errors.email}
                 type="email"
@@ -27,7 +39,8 @@ function Login() {
                 onBlur={onBlur}
               />
               <Input
-                value={values.name}
+                disabled={isDisabledInput}
+                value={values['password'] || ''}
                 text="Пароль"
                 textError={errors.password}
                 type="password"
@@ -38,7 +51,7 @@ function Login() {
               />
             </div>
             <div>
-              <AuthBtn disabled={!isValid} text="Войти" />
+              <AuthBtn disabled={!isValid || isDisabledInput} text="Войти" />
               <AuthLink text="Ещё не зарегистрированы?" linkText="Регистрация" link="/signup" />
             </div>
           </AuthForm>
