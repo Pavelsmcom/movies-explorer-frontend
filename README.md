@@ -15,22 +15,14 @@ https://movies-explorer.pavelsm.nomoredomains.monster
 [![movies-explorer-frontend](https://pavelsm.com/GitPic/movies-explorer.png)
 </details>
 
-## ⚒️ Используемые технологии: ⚒️
-1. HTML5
-2. CSS:
- - Flexbox;
- - Adaptive UI;
- - Media Queries;
- - PixelPerfect.
-3. JavaScript:
- - EventListeners;
- - Asunc functions.
-4. React:
-- Create React App;
-- React Router;
-- Hooks.
+## Используемые технологии:
+![HTML](https://img.shields.io/badge/-HTML-05122A?style=flat&logo=HTML5)&nbsp;
+![CSS](https://img.shields.io/badge/-CSS-05122A?style=flat&logo=CSS3&logoColor=1572B6)&nbsp;
+![JavaScript](https://img.shields.io/badge/-JavaScript-05122A?style=flat&logo=javascript)&nbsp;
+![React](https://img.shields.io/badge/-React-05122A?style=flat&logo=react)&nbsp;
+![React-router](https://img.shields.io/badge/-React_Router-05122A?style=flat&logo=react-router)&nbsp;
 
-## 🖥️ Возможности приложения 🖥️
+## Возможности приложения:
 
 - [x] Регистрация / Авторизация
 - [x] Изменение пользовательских данных (email, login)
