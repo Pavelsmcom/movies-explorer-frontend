@@ -2,7 +2,7 @@
 
 Интерактивная SPA-страница, на которой пользователи могут искать фильмы по ключевым словам и добавлять их в избранное.
 
-Backend проекта расположен в [этом репозитории](https://github.com/Pavelsmcom/movies-explorer-api).
+Backend проекта расположен в [этом репозитории](https://github.com/Pavelsmcom/movies-explorer-api)
 
 ## Ссылка на проект: 
 
@@ -46,7 +46,9 @@ https://movies-explorer.pavelsm.nomoredomains.monster
 
 ## Ссылка на макет в Figma:
 
-https://www.figma.com/file/HXalk39BOa53PSbwp0Pb3F/My-Diploma_1?type=design&t=VEUZzQq65YKcSQwN-6
+[Figma](https://www.figma.com/file/HXalk39BOa53PSbwp0Pb3F/My-Diploma_1?type=design&t=VEUZzQq65YKcSQwN-6)
+
+
 
 ## Планы на доработку:
 
