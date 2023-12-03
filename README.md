@@ -4,10 +4,6 @@
 
 Backend проекта расположен в [этом репозитории](https://github.com/Pavelsmcom/movies-explorer-api)
 
-## Ссылка на проект: 
-
-https://movies-explorer.pavelsm.nomoredomains.monster
-
 ## Скриншоты:
 
 <details><summary><b>Развернуть</b></summary>
