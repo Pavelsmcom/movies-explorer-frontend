@@ -43,9 +43,3 @@ Backend проекта расположен в [этом репозитории]
 ## Ссылка на макет в Figma:
 
 [Figma](https://www.figma.com/file/HXalk39BOa53PSbwp0Pb3F/My-Diploma_1?type=design&t=VEUZzQq65YKcSQwN-6)
-
-
-
-## Планы на доработку:
-
-Переписать проект на typeScript
